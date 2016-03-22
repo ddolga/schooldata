@@ -12,15 +12,15 @@ public class TransliteratorForCombine implements CellProcessorInterface {
 
         String str;
         if (cell == null || cell.getCellType() == Cell.CELL_TYPE_BLANK || cell.getCellType() == Cell.CELL_TYPE_FORMULA) {
-            str = "";
-        } else {
-            str = cellProcessor.processCell(cell);
-            if (str == null) {
-                try{
-                    str = cell.toString();
-                }catch(Exception e){
-                    e.printStackTrace();
-                }
+            return null;
+        }
+
+        str = cellProcessor.processCell(cell);
+        if (str == null) {
+            try {
+                str = cell.toString();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
 

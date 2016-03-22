@@ -30,7 +30,7 @@ public class ProcessAllCellsTest {
     @Test
     public void testProcess() throws Exception {
 
-        transliterator.process("./data/original/Teachers_Test.xlsx",null,processor);
+        transliterator.process("./data/original/Teachers_Test.xlsx",null,processor,0);
 
         ArgumentMatcher<Cell> matcher = new ArgumentMatcher<Cell>() {
             @Override
@@ -44,7 +44,7 @@ public class ProcessAllCellsTest {
 
     @Test
     public void testWalkCells2() throws Exception {
-        Workbook wb = transliterator.process("./data/original/Teachers_Test.xlsx", null, new Transliterator());
+        Workbook wb = transliterator.process("./data/original/Teachers_Test.xlsx", null, new Transliterator(),0);
         String result = wb.getSheetAt(0).getRow(3).getCell(3).getStringCellValue();
         assertEquals("uchitiel", result);
     }

@@ -10,8 +10,8 @@ CREATE TABLE `schools` (
   `zip` varchar(10) NOT NULL DEFAULT '',
   `address` varchar(255) NOT NULL DEFAULT '',
   `email` varchar(50) DEFAULT NULL,
-  `something1` int(11) unsigned DEFAULT NULL,
-  `something2` int(11) unsigned NOT NULL,
+  `regional` int(11) unsigned DEFAULT NULL,
+  `protected` int(11) unsigned NOT NULL,
   `class` int(11) unsigned NOT NULL,
   `num_classes` double unsigned DEFAULT NULL,
   PRIMARY KEY (`id_schools`)

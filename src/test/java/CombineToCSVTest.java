@@ -6,6 +6,6 @@ public class CombineToCSVTest {
     @Test
     public void testProcess() throws Exception {
         CombineToCSV exporter = new CombineToCSV();
-        exporter.process("./data/original/Teachers_Test.xlsx","./data/original/Teachers_Test_converted.csv",new Transliterator());
+        exporter.process("./data/original/Teachers_Test.xlsx","./data/original/Teachers_Test_converted.csv",new Transliterator(),0);
     }
 }

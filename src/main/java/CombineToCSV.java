@@ -13,7 +13,7 @@ public class CombineToCSV implements WorkbookProcessInterface {
     private static final String LINE_DELIENATOR = "\n";
 
     @Override
-    public Workbook process(String inFileName, String outFileName, CellProcessorInterface cellProcessor) {
+    public Workbook process(String inFileName, String outFileName, CellProcessorInterface cellProcessor,int limit) {
 
         try {
             Workbook wb = WorkbookFactory.create(new File(inFileName));
@@ -21,6 +21,7 @@ public class CombineToCSV implements WorkbookProcessInterface {
             FileOutputStream out = new FileOutputStream(outFileName);
             String line;
             Cell cell;
+
             for (Sheet sheet : wb) {
                 for (Row row : sheet) {
                     line = "";

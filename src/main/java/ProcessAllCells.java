@@ -10,7 +10,7 @@ import java.io.IOException;
 public class ProcessAllCells implements WorkbookProcessInterface {
 
     @Override
-    public Workbook process(String inFileName, String outFileName, CellProcessorInterface cellProcessor) {
+    public Workbook process(String inFileName, String outFileName, CellProcessorInterface cellProcessor,int limit) {
 
         try {
             Workbook wb = WorkbookFactory.create(new File(inFileName));
