@@ -1,13 +1,19 @@
+package importers.excel;
+
 import api.CellProcessorInterface;
 import api.WorkbookProcessInterface;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class CombineToCSV implements WorkbookProcessInterface {
+
+    Logger logger = LoggerFactory.getLogger(CombineToCSV.class);
 
     private static final String FIELD_DELIENATOR = "\t";
     private static final String LINE_DELIENATOR = "\n";
@@ -17,7 +23,7 @@ public class CombineToCSV implements WorkbookProcessInterface {
 
         try {
             Workbook wb = WorkbookFactory.create(new File(inFileName));
-            System.out.println("loaded: " + inFileName);
+            logger.info("loaded: " + inFileName);
             FileOutputStream out = new FileOutputStream(outFileName);
             String line;
             Cell cell;

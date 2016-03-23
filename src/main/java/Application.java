@@ -4,15 +4,12 @@ import java.io.InputStreamReader;
 
 public class Application {
 
-    protected static String[] commands;
-
-
     static class Parameters {
 
         public static int type;
         public static String[] fa;
 
-        public static void processParameters(String[] args,String[] commands) {
+        public static void processParameters(String[] args, String[] commands) {
 
             type = 0;
             fa = null;

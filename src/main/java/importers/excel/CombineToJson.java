@@ -1,9 +1,13 @@
+package importers.excel;
+
 import api.CellProcessorInterface;
 import api.WorkbookProcessInterface;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -13,6 +17,8 @@ import java.util.Map;
 import java.util.Vector;
 
 public class CombineToJson implements WorkbookProcessInterface {
+
+    Logger logger = LoggerFactory.getLogger(CombineToJson.class);
 
 
     private String[] readHeaderRow(Row row, CellProcessorInterface cellProcessor) {
@@ -37,7 +43,7 @@ public class CombineToJson implements WorkbookProcessInterface {
 
         try {
             Workbook wb = WorkbookFactory.create(new File(inFileName));
-            System.out.println("loaded: " + inFileName);
+            logger.info("loaded: " + inFileName);
 
             JSONArray jsonArray = new JSONArray();
 

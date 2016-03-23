@@ -1,5 +1,6 @@
 import api.CellProcessorInterface;
 import api.WorkbookProcessInterface;
+import importers.excel.ProcessAllCells;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.junit.Before;
