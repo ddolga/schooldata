@@ -9,37 +9,30 @@ public class MunicipalityCleaner extends Application {
     Logger logger = LoggerFactory.getLogger(MunicipalityCleaner.class);
 
     private final static String[] commands = {"1. Transliterate", "2. Combine CSV"};
-
+    private FormProcessInterface processor;
 
     public static void main(String[] args) {
-        Parameters.processParameters(args, commands);
-        MunicipalityCleaner municipalityCleaner = new MunicipalityCleaner();
-        municipalityCleaner.cleanData(Parameters.type, Parameters.fa, 0);
+        Parameters.processParameters("RegEx Text Extractor", args, commands);
+        MunicipalityCleaner municipalityCleaner = new MunicipalityCleaner(Parameters.type, 0);
+        municipalityCleaner.iterateOverFiles(Parameters.fa);
     }
 
-
-    public void cleanData(int type, String[] fa, int limit) {
+    public MunicipalityCleaner(int type, int limit) {
+        super(type,limit);
 
         switch (type) {
             case 1:
-                //********  TRANSLITERATE **********//
-                FormProcessInterface translit = new FormTransliterator();
-                for (String s : fa) {
-                    logger.info("Processing: " + s);
-                    translit.process(s, _formatOutputFileName(s, "translit"), limit);
-                }
+                processor = new FormTransliterator();
                 break;
             case 2:
-                //********  COMBINE **********//
-                FormProcessInterface extract = new FormExtractorCvs();
-                for (String s : fa) {
-                    logger.info("Processing: " + s);
-                    extract.process(s, _formatOutputFileName(s, "converted"), limit);
-                }
+                processor = new FormExtractorCvs();
                 break;
         }
-
     }
 
+    @Override
+    protected void processFile(String path) {
+        processor.process(path, _formatOutputFileName(path, type == 1 ? "translit" : "converted"), limit);
+    }
 
 }

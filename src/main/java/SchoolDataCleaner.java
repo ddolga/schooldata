@@ -12,47 +12,42 @@ public class SchoolDataCleaner extends Application {
     Logger logger = LoggerFactory.getLogger(SchoolDataCleaner.class);
 
 
-    private static final String[] commands = {"1. Transliterate", "2. Combine CSV", "3. Combine JSON"};
+    private static final String[] commands = {"1. Transliterate", "2. Combine CSV"};
 
+
+    private WorkbookProcessInterface processor;
 
     public static void main(String[] args) {
-        Parameters.processParameters(args, commands);
-        SchoolDataCleaner cleaner = new SchoolDataCleaner();
-        cleaner.cleanData(Parameters.type, Parameters.fa, 0);
+        Parameters.processParameters("Excel Data Converter", args, commands);
+        SchoolDataCleaner cleaner = new SchoolDataCleaner(Parameters.type, 0);
+        cleaner.iterateOverFiles(Parameters.fa);
+    }
 
+    public SchoolDataCleaner(int type, int limit) {
+        super(type, limit);
+
+        switch(type){
+            case 1:
+                processor = new ProcessAllCells();
+                break;
+            case 2:
+                processor = new CombineToCSV();
+                break;
+        }
     }
 
 
-    public void cleanData(int type, String[] fa, int limit) {
-
-        switch (type) {
+    @Override
+    protected void processFile(String path) {
+        logger.info("Processing: " + path);
+        switch(type){
             case 1:
-                //********  TRANSLITERATE **********//
-                WorkbookProcessInterface translit = new ProcessAllCells();
-                for (String s : fa) {
-                    logger.info("Processing: " + s);
-                    translit.process(s, _formatOutputFileName(s, "translit"), new Transliterator(), limit);
-                }
+                processor.process(path, _formatOutputFileName(path, "translit"), new Transliterator(), limit);
                 break;
             case 2:
-                //********  COMBINE **********//
-                WorkbookProcessInterface combine = new CombineToCSV();
-                for (String s : fa) {
-                    logger.info("Processing: " + s);
-                    combine.process(s, _formatOutputFileName(s, "converted", "txt"), new TransliteratorForCombine(), limit);
-                }
-                break;
-            case 3:
-                //********  IMPORT INTO JSON **********//
-                WorkbookProcessInterface combineJson = new CombineToJson();
-                for (String s : fa) {
-                    logger.info("Processing: " + s);
-                    combineJson.process(s, _formatOutputFileName(s, "converted", "json"), new TransliteratorForCombine(), limit);
-                }
-
+                processor.process(path, _formatOutputFileName(path, "converted", "txt"), new TransliteratorForCombine(), limit);
                 break;
         }
-
     }
 
 

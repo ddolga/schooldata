@@ -2,10 +2,14 @@ package importers.form;
 
 import api.FormProcessInterface;
 import net.sf.junidecode.Junidecode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 
 public class FormTransliterator implements FormProcessInterface {
+
+    Logger logger = LoggerFactory.getLogger(FormTransliterator.class);
 
     private static final String lineSeparator = System.getProperty("line.separator");
 
@@ -25,7 +29,7 @@ public class FormTransliterator implements FormProcessInterface {
             br.close();
             bw.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getLocalizedMessage());
         }
     }
 }

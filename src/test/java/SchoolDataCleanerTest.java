@@ -8,14 +8,14 @@ public class SchoolDataCleanerTest {
 
     @Test
     public void test_formatOutputFileName() throws Exception {
-        SchoolDataCleaner cleaner = new SchoolDataCleaner();
+        SchoolDataCleaner cleaner = new SchoolDataCleaner(2,0);
         String result = cleaner._formatOutputFileName("c:/users/who/suck/testies.txt","converted");
         assertEquals("c:/users/who/suck/testies_converted.txt",result);
     }
 
     @Test
     public void test_formatOutputFileName2() throws Exception {
-        SchoolDataCleaner cleaner = new SchoolDataCleaner();
+        SchoolDataCleaner cleaner = new SchoolDataCleaner(2,0);
         String result = cleaner._formatOutputFileName("c:/users/who/suck/testies.txt","converted","cvs");
         assertEquals("c:/users/who/suck/testies_converted.cvs",result);
     }
