@@ -1,6 +1,6 @@
-import api.CellProcessorInterface;
-import api.WorkbookProcessInterface;
-import importers.excel.ProcessAllCells;
+import com.nadia.data.api.CellProcessorInterface;
+import com.nadia.data.api.WorkbookProcessInterface;
+import com.nadia.data.importers.excel.ProcessAllCells;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.junit.Before;
@@ -8,7 +8,7 @@ import org.junit.Test;
 import org.mockito.ArgumentMatcher;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import processors.Transliterator;
+import com.nadia.data.processors.Transliterator;
 
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.argThat;

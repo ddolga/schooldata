@@ -1,6 +1,6 @@
-import importers.excel.CombineToCSV;
+import com.nadia.data.importers.excel.CombineToCSV;
 import org.junit.Test;
-import processors.Transliterator;
+import com.nadia.data.processors.Transliterator;
 
 public class CombineToCSVTest {
 
