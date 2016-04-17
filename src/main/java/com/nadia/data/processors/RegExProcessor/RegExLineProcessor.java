@@ -1,5 +1,6 @@
 package com.nadia.data.processors.RegExProcessor;
 
+import com.nadia.data.MunicipalityCleaner;
 import com.nadia.data.Util;
 import com.nadia.data.api.RegExLineProcessorInterface;
 import com.nadia.data.errors.PatternMatchError;
@@ -31,8 +32,8 @@ public class RegExLineProcessor implements RegExLineProcessorInterface {
             if (matcher.groupCount() != 2)
                 throw new PatternMatchError();
 
-            region = matcher.group(1);
-            municipality = matcher.group(2);
+            region = matcher.group(1).trim();
+            municipality = matcher.group(2).trim();
 
             return null;
         }
@@ -45,7 +46,7 @@ public class RegExLineProcessor implements RegExLineProcessorInterface {
             if (matcher.groupCount() != 1)
                 throw new PatternMatchError();
 
-            region = matcher.group(1);
+            region = matcher.group(1).trim();
 
             return null;
         }
@@ -58,7 +59,7 @@ public class RegExLineProcessor implements RegExLineProcessorInterface {
             if (matcher.groupCount() != 1)
                 throw new PatternMatchError();
 
-            municipality = matcher.group(1);
+            municipality = matcher.group(1).trim();
 
             return null;
         }
@@ -233,6 +234,6 @@ public class RegExLineProcessor implements RegExLineProcessorInterface {
             }
         }
 
-        return String.join(FIELD_DELIMETER, cArr);
+        return String.join(MunicipalityCleaner.FIELD_DELIMETER, cArr);
     }
 }

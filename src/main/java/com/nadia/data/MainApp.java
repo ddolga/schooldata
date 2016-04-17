@@ -31,10 +31,12 @@ public abstract class MainApp {
 
     private void _iterateOverFiles(File[] fa) {
         for (File file : fa) {
-            if (file.isDirectory()) {
-                _iterateOverFiles(file.listFiles());
-            } else {
-                processFile(file.getAbsolutePath());
+            if(!file.getName().startsWith(".")){
+                if (file.isDirectory()) {
+                    _iterateOverFiles(file.listFiles());
+                } else {
+                    processFile(file.getAbsolutePath());
+                }
             }
         }
     }

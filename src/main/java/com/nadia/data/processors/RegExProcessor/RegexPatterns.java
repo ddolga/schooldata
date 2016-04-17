@@ -2,7 +2,6 @@ package com.nadia.data.processors.RegExProcessor;
 
 public class RegexPatterns {
 
-    public static final String FIELD_DELIMETER = "\t";
 
     public static final String TITLE_MATCH_STR = "OBLAST ([A-Z]*) OBSHCHINA ([A-Z]*)";
     public static final String OBLAST_MATCH_STR = "OBLAST:(.*)T[\\s]+A[\\s]+B";

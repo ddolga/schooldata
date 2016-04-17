@@ -18,7 +18,7 @@ public class FormTransliterator implements FormProcessInterface {
     public void process(String inFileName, int limit) {
 
         try {
-            String outFileName = Util.formatOutputFileName(inFileName,"traslit");
+            String outFileName = Util.formatOutputFileName(inFileName,"translit");
             BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(inFileName), "UTF-16"));
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outFileName),"US-ASCII"));
             String line = br.readLine();

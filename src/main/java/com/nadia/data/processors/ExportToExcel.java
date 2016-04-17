@@ -1,5 +1,6 @@
 package com.nadia.data.processors;
 
+import com.nadia.data.MunicipalityCleaner;
 import com.nadia.data.Parameters;
 import com.nadia.data.api.FormProcessInterface;
 import org.apache.poi.ss.usermodel.Cell;
@@ -12,8 +13,6 @@ import java.io.*;
 
 public class ExportToExcel implements FormProcessInterface {
 
-
-    private final static String FIELD_DELIMETER = "\t";
 
     Workbook wb;
     FileOutputStream outStream;
@@ -42,7 +41,7 @@ public class ExportToExcel implements FormProcessInterface {
             int rowIdx = 0;
             while (line != null) {
                 Row row = sheet.createRow(rowIdx++);
-                String[] arr = line.split(FIELD_DELIMETER);
+                String[] arr = line.split(MunicipalityCleaner.FIELD_DELIMETER);
                 for (int i = 0; i < arr.length; i++) {
                     Cell cell = row.createCell(i);
                     cell.setCellValue(arr[i]);
