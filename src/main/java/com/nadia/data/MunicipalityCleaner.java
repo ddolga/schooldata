@@ -19,7 +19,7 @@ public class MunicipalityCleaner extends MainApp {
     private FormProcessInterface processor;
 
     public static void main(String[] args) {
-        Parameters params = Parameters.processParameters("RegEx Text Extractor", args, commands);
+        Parameters params = Parameters.processParameters( args);
         MunicipalityCleaner municipalityCleaner = new MunicipalityCleaner(params, 0);
         municipalityCleaner.iterateOverFiles(params.getFa());
     }

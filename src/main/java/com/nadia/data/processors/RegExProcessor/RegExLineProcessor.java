@@ -128,22 +128,29 @@ public class RegExLineProcessor implements RegExLineProcessorInterface {
 
 
     private LinePatternMatcherAbstract subRowPatternMatcher = new LinePatternMatcherAbstract(SUB_ROW_MATCH_STR) {
+
+        private final int MAX_COLUMNS = 14;
+        private final int COL_CITY = 5;
+        private final int MAX_GROUPS = 9;
+
         @Override
         public String parse() throws PatternMatchError {
 
-            if (matcher.groupCount() != 9)
+            if (matcher.groupCount() != MAX_GROUPS)
                 throw new PatternMatchError();
 
-            String[] rowArr = new String[14];
+            String[] rowArr = new String[MAX_COLUMNS];
             rowArr[0] = Integer.toString(++row_id);
             rowArr[1] = date;
             rowArr[2] = region;
             rowArr[3] = municipality;
             rowArr[13] = Integer.toString(parent_id);
 
+            rowArr[COL_CITY] = matcher.group(1).trim();
+
             try {
-                for (int i = 0; i < 9; i++) {
-                    rowArr[4 + i] = matcher.group(i + 1).trim();
+                for (int i = 1; i < MAX_GROUPS; i++) {
+                    rowArr[COL_CITY + i] = matcher.group(i + 1).trim();
                 }
 
                 return combineToRow(rowArr);

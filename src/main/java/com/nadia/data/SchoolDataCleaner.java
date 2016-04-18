@@ -19,7 +19,7 @@ public class SchoolDataCleaner extends MainApp {
     private WorkbookProcessInterface processor;
 
     public static void main(String[] args) {
-         Parameters params =  Parameters.processParameters("Excel Data Converter", args, commands);
+        Parameters params = Parameters.processParameters( args);
         SchoolDataCleaner cleaner = new SchoolDataCleaner(params, 0);
         cleaner.iterateOverFiles(params.getFa());
     }
@@ -27,7 +27,7 @@ public class SchoolDataCleaner extends MainApp {
     public SchoolDataCleaner(Parameters params, int limit) {
         super(params, limit);
 
-        switch(params.getType()){
+        switch (params.getType()) {
             case 1:
                 processor = new ProcessAllCells();
                 break;
@@ -41,7 +41,7 @@ public class SchoolDataCleaner extends MainApp {
     @Override
     protected void processFile(String path) {
         logger.info("Processing: " + path);
-        switch(type){
+        switch (type) {
             case 1:
                 processor.process(path, Util.formatOutputFileName(path, "translit"), new Transliterator(), limit);
                 break;

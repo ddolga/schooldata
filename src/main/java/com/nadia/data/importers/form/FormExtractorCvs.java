@@ -12,6 +12,7 @@ import java.io.*;
 public class FormExtractorCvs implements FormProcessInterface {
 
     Logger logger = LoggerFactory.getLogger(FormExtractorCvs.class);
+    private final RegExLineProcessorInterface lineProcessor = new RegExLineProcessor();
 
     @Override
     public void process(String inFileName, int limit) {
@@ -21,7 +22,6 @@ public class FormExtractorCvs implements FormProcessInterface {
             BufferedReader br = new BufferedReader(new FileReader(inFileName));
             BufferedWriter bw = new BufferedWriter(new FileWriter(outFileName));
 
-            RegExLineProcessorInterface lineProcessor = new RegExLineProcessor();
 
             String line = br.readLine();
             while (line != null) {

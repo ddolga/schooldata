@@ -7,20 +7,22 @@ public class Parameters {
     private int type;
     private String[] fa;
     private String targetFileName;
+    private String header;
 
-    public static Parameters processParameters(String title, String[] args, String[] commands) {
+    public static Parameters processParameters( String[] args) {
 
-        int type = 0;
         ArrayList<String> fa = new ArrayList<>();
-        String targetFileName = null;
+        Parameters params = new Parameters();
         if (args.length > 0) {
-            type = Integer.parseInt(args[0]);
-
+            params.setType(Integer.parseInt(args[0]));
             int len = args.length;
             int nextIdx = 1;
             while (nextIdx < len) {
                 if (args[nextIdx].equals("-o")) {
-                    targetFileName = args[nextIdx + 1];
+                    params.setTargetFileName(args[nextIdx + 1]);
+                    nextIdx = nextIdx + 2;
+                }else if(args[nextIdx].equals("-h")){
+                    params.setHeader(args[nextIdx + 1]);
                     nextIdx = nextIdx + 2;
                 } else {
                     fa.add(args[nextIdx++]);
@@ -28,10 +30,7 @@ public class Parameters {
             }
         }
 
-        Parameters params = new Parameters();
         params.setFa(fa.toArray(new String[0]));
-        params.setType(type);
-        params.setTargetFileName(targetFileName);
         return params;
     }
 
@@ -57,5 +56,13 @@ public class Parameters {
 
     public void setTargetFileName(String targetFileName) {
         this.targetFileName = targetFileName;
+    }
+
+    public String getHeader() {
+        return header;
+    }
+
+    public void setHeader(String header) {
+        this.header = header;
     }
 }
