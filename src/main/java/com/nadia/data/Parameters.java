@@ -62,6 +62,10 @@ public class Parameters {
         return header;
     }
 
+    public boolean hasHeader(){
+        return header != null && !header.isEmpty();
+    }
+
     public void setHeader(String header) {
         this.header = header;
     }

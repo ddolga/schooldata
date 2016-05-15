@@ -1,62 +1,95 @@
 package com.nadia.data.importers.excel;
 
+import com.nadia.data.Parameters;
+import com.nadia.data.SchoolDataCleaner;
+import com.nadia.data.Util;
 import com.nadia.data.api.CellProcessorInterface;
 import com.nadia.data.api.WorkbookProcessInterface;
+import com.nadia.data.errors.PatternMatchError;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
+
+import static com.nadia.data.MainApp.combineToRow;
 
 public class CombineToCSV implements WorkbookProcessInterface {
 
     Logger logger = LoggerFactory.getLogger(CombineToCSV.class);
 
-    private static final String FIELD_DELIENATOR = "\t";
-    private static final String LINE_DELIENATOR = "\n";
+    final private Parameters params;
+
+    public CombineToCSV(Parameters params) {
+        this.params = params;
+    }
+
 
     @Override
-    public Workbook process(String inFileName, String outFileName, CellProcessorInterface cellProcessor,int limit) {
+    public Workbook process(String inFileName, CellProcessorInterface cellProcessor, int limit) {
+
+        String outFileName = Util.formatOutputFileName(inFileName, "converted", "txt");
+
 
         try {
             Workbook wb = WorkbookFactory.create(new File(inFileName));
             logger.info("loaded: " + inFileName);
-            FileOutputStream out = new FileOutputStream(outFileName);
-            String line;
+
+            BufferedWriter out = new BufferedWriter(new FileWriter(outFileName));
+
+            if (params.hasHeader()) {
+                writeHeader(out, params.getHeader());
+            }
+
             Cell cell;
 
+            //process all worksheets
             for (Sheet sheet : wb) {
+
+                //process all rows
                 for (Row row : sheet) {
-                    line = "";
+
                     boolean isEmpty = true;
-                    for (int i = 0; i < row.getLastCellNum() - 1; i++) {
+                    //process columns
+                    int maxCol = row.getLastCellNum();
+                    String[] values = new String[maxCol];
+
+                    for (int i = 0; i < maxCol; i++) {
                         cell = row.getCell(i);
 
                         String val = cellProcessor.processCell(cell);
                         isEmpty = isEmpty && (val == null || val.isEmpty());
-                        line = line + val + FIELD_DELIENATOR;
+                        if (!isEmpty) {
+                            values[i] = val;
+                        }
                     }
 
-                    cell = row.getCell(row.getLastCellNum() - 1);
-                    String val = cellProcessor.processCell(cell);
-                    isEmpty = isEmpty && val.isEmpty();
-                    line = line + val + LINE_DELIENATOR;
-                    if(!isEmpty){
-                        out.write(line.getBytes());
+                    if (!isEmpty) {
+                        String line = combineToRow(values);
+                        out.write(line);
+                        out.newLine();
                     }
                 }
             }
             out.close();
             wb.close();
             return wb;
-        } catch (IOException | InvalidFormatException e) {
+        } catch (IOException | InvalidFormatException | PatternMatchError e) {
             e.printStackTrace();
         }
 
         return null;
+    }
+
+    private void writeHeader(BufferedWriter out, String header) throws IOException {
+        out.write(header);
+        out.newLine();
+    }
+
+    @Override
+    public void cleanUp() {
+
     }
 
 

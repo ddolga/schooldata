@@ -1,5 +1,6 @@
 package com.nadia.data.importers.excel;
 
+import com.nadia.data.Util;
 import com.nadia.data.api.CellProcessorInterface;
 import com.nadia.data.api.WorkbookProcessInterface;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -12,8 +13,9 @@ import java.io.IOException;
 public class ProcessAllCells implements WorkbookProcessInterface {
 
     @Override
-    public Workbook process(String inFileName, String outFileName, CellProcessorInterface cellProcessor,int limit) {
+    public Workbook process(String inFileName, CellProcessorInterface cellProcessor, int limit) {
 
+        String outFileName = Util.formatOutputFileName(inFileName, "translit");
         try {
             Workbook wb = WorkbookFactory.create(new File(inFileName));
             for (Sheet sheet : wb) {
@@ -46,6 +48,12 @@ public class ProcessAllCells implements WorkbookProcessInterface {
         }
 
         return null;
+
+    }
+
+
+    @Override
+    public void cleanUp() {
 
     }
 }

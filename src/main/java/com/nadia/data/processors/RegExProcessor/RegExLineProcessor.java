@@ -1,15 +1,11 @@
 package com.nadia.data.processors.RegExProcessor;
 
-import com.nadia.data.MunicipalityCleaner;
-import com.nadia.data.Util;
 import com.nadia.data.api.RegExLineProcessorInterface;
 import com.nadia.data.errors.PatternMatchError;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
+import static com.nadia.data.MainApp.combineToRow;
 import static com.nadia.data.processors.RegExProcessor.RegexPatterns.*;
 
 public class RegExLineProcessor implements RegExLineProcessorInterface {
@@ -129,7 +125,7 @@ public class RegExLineProcessor implements RegExLineProcessorInterface {
 
     private LinePatternMatcherAbstract subRowPatternMatcher = new LinePatternMatcherAbstract(SUB_ROW_MATCH_STR) {
 
-        private final int MAX_COLUMNS = 14;
+        private final int MAX_COLUMNS = 15;
         private final int COL_CITY = 5;
         private final int MAX_GROUPS = 9;
 
@@ -144,13 +140,15 @@ public class RegExLineProcessor implements RegExLineProcessorInterface {
             rowArr[1] = date;
             rowArr[2] = region;
             rowArr[3] = municipality;
-            rowArr[13] = Integer.toString(parent_id);
+            rowArr[4] = "NA";
+            rowArr[MAX_COLUMNS - 1] = Integer.toString(parent_id);
 
             rowArr[COL_CITY] = matcher.group(1).trim();
 
             try {
                 for (int i = 1; i < MAX_GROUPS; i++) {
-                    rowArr[COL_CITY + i] = matcher.group(i + 1).trim();
+                    String val = matcher.group(i + 1).trim();
+                    rowArr[COL_CITY + i] = val.isEmpty() ? "0" : val;
                 }
 
                 return combineToRow(rowArr);
@@ -211,36 +209,4 @@ public class RegExLineProcessor implements RegExLineProcessorInterface {
     }
 
 
-    private String combineToRow(String[] rowArr) throws PatternMatchError {
-
-        String[] cArr = new String[rowArr.length];
-        Pattern pattern = Pattern.compile("([\\d]{2})\\.([\\d]{2})\\.([\\d]{4})");
-        for (int i = 0, len = rowArr.length; i < len; i++) {
-            String v = rowArr[i];
-            switch (Util.getStrType(v)) {
-                case VDATE:
-                    Matcher m = pattern.matcher(v);
-                    if (m.find() && m.groupCount() == 3) {
-                        cArr[i] = m.group(3) + "-" + m.group(2) + "-" + m.group(1);
-                    } else {
-                        throw new PatternMatchError();
-                    }
-                    break;
-                case VSTRING:
-                    cArr[i] = "\"" + v + "\"";
-                    break;
-                case VINTEGER:
-                case VDECIMAL:
-                    cArr[i] = v;
-                    break;
-                case NONE:
-                    cArr[i] = "";
-                    break;
-                default:
-                    cArr[i] = v;
-            }
-        }
-
-        return String.join(MunicipalityCleaner.FIELD_DELIMETER, cArr);
-    }
 }

@@ -16,9 +16,11 @@ public class ConcatenateFiles implements FormProcessInterface {
 
 
     WritableByteChannel outputChannel;
+    File targetFile = null;
 
     public ConcatenateFiles(Parameters params) {
-        setupOutputChannel(params.getTargetFileName());
+        targetFile = new File(params.getTargetFileName());
+        setupOutputChannel(targetFile);
         writeHeader(params.getHeader());
     }
 
@@ -31,9 +33,14 @@ public class ConcatenateFiles implements FormProcessInterface {
         }
     }
 
-    private void setupOutputChannel(String outFileName) {
+    private void setupOutputChannel(File targetFile) {
         try {
-            FileOutputStream fos = new FileOutputStream(new File(outFileName));
+            if(targetFile.exists()){
+                targetFile.delete();
+            }
+
+
+            FileOutputStream fos = new FileOutputStream(targetFile);
             outputChannel = fos.getChannel();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -44,6 +51,10 @@ public class ConcatenateFiles implements FormProcessInterface {
     public void process(String inFileName, int limit) {
 
         try {
+            //don't process the output file iteself
+            if(targetFile.getAbsolutePath().equals(new File(inFileName).getAbsolutePath()))
+                return;
+
             FileInputStream fis = new FileInputStream(new File(inFileName));
             FileChannel inputChannel = fis.getChannel();
             inputChannel.transferTo(0, inputChannel.size(), outputChannel);

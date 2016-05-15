@@ -1,8 +1,15 @@
 package com.nadia.data;
 
+import com.nadia.data.errors.PatternMatchError;
+
 import java.io.File;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public abstract class MainApp {
+
+
+    public static final String FIELD_DELIMETER = ",";
 
     protected int type;
     protected int limit;
@@ -39,6 +46,40 @@ public abstract class MainApp {
                 }
             }
         }
+    }
+
+
+    static public String combineToRow(String[] rowArr) throws PatternMatchError {
+
+        String[] cArr = new String[rowArr.length];
+        Pattern pattern = Pattern.compile("([\\d]{2})\\.([\\d]{2})\\.([\\d]{4})");
+        for (int i = 0, len = rowArr.length; i < len; i++) {
+            String v = rowArr[i];
+            switch (Util.getStrType(v)) {
+                case VDATE:
+                    Matcher m = pattern.matcher(v);
+                    if (m.find() && m.groupCount() == 3) {
+                        cArr[i] = m.group(3) + "-" + m.group(2) + "-" + m.group(1);
+                    } else {
+                        throw new PatternMatchError();
+                    }
+                    break;
+                case VSTRING:
+                    cArr[i] = "\"" + v + "\"";
+                    break;
+                case VINTEGER:
+                case VDECIMAL:
+                    cArr[i] = v;
+                    break;
+                case NONE:
+                    cArr[i] = "";
+                    break;
+                default:
+                    cArr[i] = v;
+            }
+        }
+
+        return String.join(MainApp.FIELD_DELIMETER, cArr);
     }
 
     protected abstract void processFile(String path);

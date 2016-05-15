@@ -13,9 +13,6 @@ public class SchoolDataCleaner extends MainApp {
     Logger logger = LoggerFactory.getLogger(SchoolDataCleaner.class);
 
 
-    private static final String[] commands = {"1. Transliterate", "2. Combine CSV"};
-
-
     private WorkbookProcessInterface processor;
 
     public static void main(String[] args) {
@@ -27,12 +24,12 @@ public class SchoolDataCleaner extends MainApp {
     public SchoolDataCleaner(Parameters params, int limit) {
         super(params, limit);
 
-        switch (params.getType()) {
+        switch (type) {
             case 1:
                 processor = new ProcessAllCells();
                 break;
             case 2:
-                processor = new CombineToCSV();
+                processor = new CombineToCSV(params);
                 break;
         }
     }
@@ -43,17 +40,17 @@ public class SchoolDataCleaner extends MainApp {
         logger.info("Processing: " + path);
         switch (type) {
             case 1:
-                processor.process(path, Util.formatOutputFileName(path, "translit"), new Transliterator(), limit);
+                processor.process(path, new Transliterator(), limit);
                 break;
             case 2:
-                processor.process(path, Util.formatOutputFileName(path, "converted", "txt"), new TransliteratorForCombine(), limit);
+                processor.process(path, new TransliteratorForCombine(), limit);
                 break;
         }
     }
 
     @Override
     protected void cleanUp() {
-
+        processor.cleanUp();
     }
 
 

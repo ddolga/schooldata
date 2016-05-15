@@ -10,12 +10,9 @@ import org.slf4j.LoggerFactory;
 
 public class MunicipalityCleaner extends MainApp {
 
-//    public static final String FIELD_DELIMETER = "\t";
-    public static final String FIELD_DELIMETER = ",";
 
     Logger logger = LoggerFactory.getLogger(MunicipalityCleaner.class);
 
-    private final static String[] commands = {"1. Transliterate", "2. Combine CSV"};
     private FormProcessInterface processor;
 
     public static void main(String[] args) {

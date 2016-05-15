@@ -4,6 +4,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 
 public interface WorkbookProcessInterface {
 
-    Workbook process(String inFileName, String outFileName, CellProcessorInterface cellProcessor, int limit);
+    Workbook process(String inFileName, CellProcessorInterface cellProcessor, int limit);
 
+    void cleanUp();
 }
