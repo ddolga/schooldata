@@ -1,4 +1,4 @@
-package com.nadia.data.processors.RegExProcessor;
+package com.nadia.data.processors.regex;
 
 public class RegexPatterns {
 

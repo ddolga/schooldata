@@ -1,6 +1,6 @@
-package com.nadia.data.importers.excel;
+package com.nadia.data.processors.file.excel;
 
-import com.nadia.data.Util;
+import com.nadia.data.processors.util.Formatters;
 import com.nadia.data.api.CellProcessorInterface;
 import com.nadia.data.api.WorkbookProcessInterface;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -12,10 +12,13 @@ import java.io.IOException;
 
 public class ProcessAllCells implements WorkbookProcessInterface {
 
+
+    //Processes all cells in a workbook and saves to a new workbook
+
     @Override
     public Workbook process(String inFileName, CellProcessorInterface cellProcessor, int limit) {
 
-        String outFileName = Util.formatOutputFileName(inFileName, "translit");
+        String outFileName = Formatters.formatOutputFileName(inFileName, "translit");
         try {
             Workbook wb = WorkbookFactory.create(new File(inFileName));
             for (Sheet sheet : wb) {

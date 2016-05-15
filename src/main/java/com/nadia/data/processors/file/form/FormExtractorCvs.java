@@ -1,11 +1,11 @@
-package com.nadia.data.importers.form;
+package com.nadia.data.processors.file.form;
 
-import com.nadia.data.Util;
+import com.nadia.data.processors.util.Formatters;
 import com.nadia.data.api.FormProcessInterface;
 import com.nadia.data.api.RegExLineProcessorInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.nadia.data.processors.RegExProcessor.RegExLineProcessor;
+import com.nadia.data.processors.regex.RegExLineProcessor;
 
 import java.io.*;
 
@@ -18,7 +18,7 @@ public class FormExtractorCvs implements FormProcessInterface {
     public void process(String inFileName, int limit) {
 
         try {
-            String outFileName = Util.formatOutputFileName(inFileName,"convert");
+            String outFileName = Formatters.formatOutputFileName(inFileName,"convert");
             BufferedReader br = new BufferedReader(new FileReader(inFileName));
             BufferedWriter bw = new BufferedWriter(new FileWriter(outFileName));
 

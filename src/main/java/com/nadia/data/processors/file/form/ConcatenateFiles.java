@@ -1,6 +1,6 @@
-package com.nadia.data.processors;
+package com.nadia.data.processors.file.form;
 
-import com.nadia.data.Parameters;
+import com.nadia.data.processors.util.Parameters;
 import com.nadia.data.api.FormProcessInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,6 +1,6 @@
-package com.nadia.data.importers.form;
+package com.nadia.data.processors.file.form;
 
-import com.nadia.data.Util;
+import com.nadia.data.processors.util.Formatters;
 import com.nadia.data.api.FormProcessInterface;
 import net.sf.junidecode.Junidecode;
 import org.slf4j.Logger;
@@ -18,7 +18,7 @@ public class FormTransliterator implements FormProcessInterface {
     public void process(String inFileName, int limit) {
 
         try {
-            String outFileName = Util.formatOutputFileName(inFileName,"translit");
+            String outFileName = Formatters.formatOutputFileName(inFileName,"translit");
             BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(inFileName), "UTF-16"));
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outFileName),"US-ASCII"));
             String line = br.readLine();

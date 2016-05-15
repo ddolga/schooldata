@@ -1,6 +1,8 @@
 package com.nadia.data;
 
 import com.nadia.data.errors.PatternMatchError;
+import com.nadia.data.processors.util.Formatters;
+import com.nadia.data.processors.util.Parameters;
 
 import java.io.File;
 import java.util.regex.Matcher;
@@ -55,7 +57,7 @@ public abstract class MainApp {
         Pattern pattern = Pattern.compile("([\\d]{2})\\.([\\d]{2})\\.([\\d]{4})");
         for (int i = 0, len = rowArr.length; i < len; i++) {
             String v = rowArr[i];
-            switch (Util.getStrType(v)) {
+            switch (Formatters.getStrType(v)) {
                 case VDATE:
                     Matcher m = pattern.matcher(v);
                     if (m.find() && m.groupCount() == 3) {

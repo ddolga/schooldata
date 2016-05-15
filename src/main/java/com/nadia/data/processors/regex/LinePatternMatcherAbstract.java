@@ -1,4 +1,4 @@
-package com.nadia.data.processors.RegExProcessor;
+package com.nadia.data.processors.regex;
 
 import com.nadia.data.errors.PatternMatchError;
 

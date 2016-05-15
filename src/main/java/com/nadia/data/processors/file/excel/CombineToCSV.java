@@ -1,8 +1,7 @@
-package com.nadia.data.importers.excel;
+package com.nadia.data.processors.file.excel;
 
-import com.nadia.data.Parameters;
-import com.nadia.data.SchoolDataCleaner;
-import com.nadia.data.Util;
+import com.nadia.data.processors.util.Parameters;
+import com.nadia.data.processors.util.Formatters;
 import com.nadia.data.api.CellProcessorInterface;
 import com.nadia.data.api.WorkbookProcessInterface;
 import com.nadia.data.errors.PatternMatchError;
@@ -26,10 +25,13 @@ public class CombineToCSV implements WorkbookProcessInterface {
     }
 
 
+    //Process all cells in a workboog and combines all worksheets together, saving to a text file
+
+
     @Override
     public Workbook process(String inFileName, CellProcessorInterface cellProcessor, int limit) {
 
-        String outFileName = Util.formatOutputFileName(inFileName, "converted", "txt");
+        String outFileName = Formatters.formatOutputFileName(inFileName, "converted", "txt");
 
 
         try {

@@ -2,7 +2,7 @@ import org.apache.poi.ss.formula.FormulaParseException;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.junit.Test;
-import com.nadia.data.processors.Transliterator;
+import com.nadia.data.processors.cell.Transliterator;
 
 import java.util.Calendar;
 import java.util.Date;

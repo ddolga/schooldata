@@ -1,10 +1,11 @@
 package com.nadia.data;
 
 import com.nadia.data.api.FormProcessInterface;
-import com.nadia.data.importers.form.FormExtractorCvs;
-import com.nadia.data.importers.form.FormTransliterator;
-import com.nadia.data.processors.ConcatenateFiles;
-import com.nadia.data.processors.ExportToExcel;
+import com.nadia.data.processors.file.form.FormExtractorCvs;
+import com.nadia.data.processors.file.form.FormTransliterator;
+import com.nadia.data.processors.file.form.ConcatenateFiles;
+import com.nadia.data.processors.file.form.ExportToExcel;
+import com.nadia.data.processors.util.Parameters;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

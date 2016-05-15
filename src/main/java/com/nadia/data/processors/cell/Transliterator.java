@@ -1,4 +1,4 @@
-package com.nadia.data.processors;
+package com.nadia.data.processors.cell;
 
 import com.nadia.data.api.CellProcessorInterface;
 import net.sf.junidecode.Junidecode;
@@ -8,10 +8,8 @@ public class Transliterator implements CellProcessorInterface {
 
     @Override
     public String processCell(Cell cell) {
-        if(cell.getCellType() == Cell.CELL_TYPE_STRING){
-            String str = cell.getStringCellValue();
-            return Junidecode.unidecode(str);
-        }
+        if (cell.getCellType() == Cell.CELL_TYPE_STRING)
+            return Junidecode.unidecode(cell.getStringCellValue()).trim();
 
         return null;
     }

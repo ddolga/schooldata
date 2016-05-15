@@ -1,7 +1,7 @@
-package com.nadia.data.processors;
+package com.nadia.data.processors.file.form;
 
 import com.nadia.data.MunicipalityCleaner;
-import com.nadia.data.Parameters;
+import com.nadia.data.processors.util.Parameters;
 import com.nadia.data.api.FormProcessInterface;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;

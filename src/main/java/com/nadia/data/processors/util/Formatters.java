@@ -1,6 +1,6 @@
-package com.nadia.data;
+package com.nadia.data.processors.util;
 
-public class Util {
+public class Formatters {
 
     public enum ValueType {VSTRING, VDATE, VINTEGER, VDECIMAL, NONE}
 
