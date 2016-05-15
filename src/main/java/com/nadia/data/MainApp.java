@@ -5,6 +5,7 @@ import com.nadia.data.processors.util.Formatters;
 import com.nadia.data.processors.util.Parameters;
 
 import java.io.File;
+import java.text.DecimalFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -70,8 +71,11 @@ public abstract class MainApp {
                     cArr[i] = "\"" + v + "\"";
                     break;
                 case VINTEGER:
-                case VDECIMAL:
                     cArr[i] = v;
+                    break;
+                case VDECIMAL:
+                    DecimalFormat df = new DecimalFormat("#.##");
+                    cArr[i] = df.format(Double.parseDouble(v));
                     break;
                 case NONE:
                     cArr[i] = "";
