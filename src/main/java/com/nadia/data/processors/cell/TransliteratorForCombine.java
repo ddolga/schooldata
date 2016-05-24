@@ -2,7 +2,9 @@ package com.nadia.data.processors.cell;
 
 import com.nadia.data.api.CellProcessorInterface;
 import org.apache.poi.ss.usermodel.Cell;
+import org.springframework.stereotype.Component;
 
+@Component
 public class TransliteratorForCombine implements CellProcessorInterface {
 
     CellProcessorInterface cellProcessor = new Transliterator();

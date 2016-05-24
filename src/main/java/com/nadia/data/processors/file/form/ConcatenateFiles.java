@@ -22,12 +22,6 @@ public class ConcatenateFiles extends AbstractProcessor {
     WritableByteChannel outputChannel;
     File targetFile = null;
 
-    @Autowired
-    public ConcatenateFiles() {
-        targetFile = new File(params.getTargetFileName());
-        setupOutputChannel(targetFile);
-        writeHeader(params.getHeader());
-    }
 
     private void writeHeader(String header) {
         ByteBuffer bb = ByteBuffer.wrap((header + "\r").getBytes());
@@ -54,6 +48,11 @@ public class ConcatenateFiles extends AbstractProcessor {
     @Override
     protected IProcessFile getProcessFile() {
         return (String inFileName) -> {
+
+            targetFile = new File(params.getTargetFileName());
+            setupOutputChannel(targetFile);
+            writeHeader(params.getHeader());
+
             try {
                 //don't process the output file iteself
                 if (targetFile.getAbsolutePath().equals(new File(inFileName).getAbsolutePath()))

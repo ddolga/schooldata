@@ -21,10 +21,6 @@ public class ExportToExcel extends AbstractProcessor {
     Workbook wb;
     FileOutputStream outStream;
 
-    @Autowired
-    public ExportToExcel() {
-        createTargetWorkbook(params.getTargetFileName());
-    }
 
     private void createTargetWorkbook(String outFileName) {
         wb = new XSSFWorkbook();
@@ -40,6 +36,7 @@ public class ExportToExcel extends AbstractProcessor {
     protected IProcessFile getProcessFile() {
         return (String inFileName) -> {
 
+            createTargetWorkbook(params.getTargetFileName());
             File f = new File(inFileName);
             Sheet sheet = wb.createSheet(f.getName());
             try {
