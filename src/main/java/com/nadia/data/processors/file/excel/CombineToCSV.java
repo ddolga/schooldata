@@ -1,7 +1,7 @@
 package com.nadia.data.processors.file.excel;
 
-import com.nadia.data.processors.util.Parameters;
-import com.nadia.data.processors.util.Formatters;
+import com.nadia.data.api.ParametersInterface;
+import com.nadia.data.util.Formatters;
 import com.nadia.data.api.CellProcessorInterface;
 import com.nadia.data.api.WorkbookProcessInterface;
 import com.nadia.data.errors.PatternMatchError;
@@ -12,15 +12,16 @@ import org.slf4j.LoggerFactory;
 
 import java.io.*;
 
-import static com.nadia.data.MainApp.combineToRow;
+import static com.nadia.data.util.Formatters.combineToRow;
+
 
 public class CombineToCSV implements WorkbookProcessInterface {
 
     Logger logger = LoggerFactory.getLogger(CombineToCSV.class);
 
-    final private Parameters params;
+    final private ParametersInterface params;
 
-    public CombineToCSV(Parameters params) {
+    public CombineToCSV(ParametersInterface params) {
         this.params = params;
     }
 

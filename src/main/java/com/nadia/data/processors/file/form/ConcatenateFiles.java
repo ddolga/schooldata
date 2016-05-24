@@ -1,6 +1,7 @@
 package com.nadia.data.processors.file.form;
 
-import com.nadia.data.processors.util.Parameters;
+import com.nadia.data.api.ParametersInterface;
+import com.nadia.data.util.Parameters;
 import com.nadia.data.api.FormProcessInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +19,7 @@ public class ConcatenateFiles implements FormProcessInterface {
     WritableByteChannel outputChannel;
     File targetFile = null;
 
-    public ConcatenateFiles(Parameters params) {
+    public ConcatenateFiles(ParametersInterface params) {
         targetFile = new File(params.getTargetFileName());
         setupOutputChannel(targetFile);
         writeHeader(params.getHeader());

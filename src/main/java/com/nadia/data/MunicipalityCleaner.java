@@ -1,28 +1,19 @@
 package com.nadia.data;
 
 import com.nadia.data.api.FormProcessInterface;
+import com.nadia.data.api.ParametersInterface;
 import com.nadia.data.processors.file.form.FormExtractorCvs;
 import com.nadia.data.processors.file.form.FormTransliterator;
 import com.nadia.data.processors.file.form.ConcatenateFiles;
 import com.nadia.data.processors.file.form.ExportToExcel;
-import com.nadia.data.processors.util.Parameters;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-public class MunicipalityCleaner extends MainApp {
+public class MunicipalityCleaner extends BaseImporter {
 
-
-    Logger logger = LoggerFactory.getLogger(MunicipalityCleaner.class);
 
     private FormProcessInterface processor;
 
-    public static void main(String[] args) {
-        Parameters params = Parameters.processParameters( args);
-        MunicipalityCleaner municipalityCleaner = new MunicipalityCleaner(params, 0);
-        municipalityCleaner.iterateOverFiles(params.getFa());
-    }
 
-    public MunicipalityCleaner(Parameters params, int limit) {
+    public MunicipalityCleaner(ParametersInterface params, int limit) {
         super(params, limit);
 
         switch (params.getType()) {

@@ -5,7 +5,7 @@ import com.nadia.data.errors.PatternMatchError;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static com.nadia.data.MainApp.combineToRow;
+import static com.nadia.data.util.Formatters.combineToRow;
 import static com.nadia.data.processors.regex.RegexPatterns.*;
 
 public class RegExLineProcessor implements RegExLineProcessorInterface {

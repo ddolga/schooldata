@@ -1,6 +1,6 @@
 package com.nadia.data.processors.file.form;
 
-import com.nadia.data.processors.util.Formatters;
+import com.nadia.data.util.Formatters;
 import com.nadia.data.api.FormProcessInterface;
 import net.sf.junidecode.Junidecode;
 import org.slf4j.Logger;

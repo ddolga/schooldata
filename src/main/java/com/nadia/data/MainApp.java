@@ -1,96 +1,28 @@
 package com.nadia.data;
 
-import com.nadia.data.errors.PatternMatchError;
-import com.nadia.data.processors.util.Formatters;
-import com.nadia.data.processors.util.Parameters;
+import com.nadia.data.util.Parameters;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Bean;
 
-import java.io.File;
-import java.text.DecimalFormat;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
+@SpringBootApplication
 public abstract class MainApp {
 
 
-    public static final String FIELD_DELIMETER = ",";
 
-    protected int type;
-    protected int limit;
-
-    public MainApp(Parameters params, int limit) {
-        this.type = params.getType();
-        this.limit = limit;
+    static public void main(String[] args) {
+        ApplicationContext ctx = SpringApplication.run(MainApp.class,args);
+        Launcher launcher = ctx.getBean(Launcher.class);
+        launcher.importData();
     }
 
 
-    protected void iterateOverFiles(String[] fs) {
-
-        File[] fa = new File[fs.length];
-        for (int i = 0; i < fs.length; i++) {
-            fa[i] = new File(fs[i]);
-        }
-
-        iterateOverFiles(fa);
+    @Bean
+    public Parameters getParameters() {
+        return new Parameters();
     }
-
-    protected void iterateOverFiles(File[] fa) {
-        _iterateOverFiles(fa);
-        cleanUp();
-    }
-
-
-    private void _iterateOverFiles(File[] fa) {
-        for (File file : fa) {
-            if(!file.getName().startsWith(".")){
-                if (file.isDirectory()) {
-                    _iterateOverFiles(file.listFiles());
-                } else {
-                    processFile(file.getAbsolutePath());
-                }
-            }
-        }
-    }
-
-
-    static public String combineToRow(String[] rowArr) throws PatternMatchError {
-
-        String[] cArr = new String[rowArr.length];
-        Pattern pattern = Pattern.compile("([\\d]{2})\\.([\\d]{2})\\.([\\d]{4})");
-        for (int i = 0, len = rowArr.length; i < len; i++) {
-            String v = rowArr[i];
-            switch (Formatters.getStrType(v)) {
-                case VDATE:
-                    Matcher m = pattern.matcher(v);
-                    if (m.find() && m.groupCount() == 3) {
-                        cArr[i] = m.group(3) + "-" + m.group(2) + "-" + m.group(1);
-                    } else {
-                        throw new PatternMatchError();
-                    }
-                    break;
-                case VSTRING:
-                    cArr[i] = "\"" + v + "\"";
-                    break;
-                case VINTEGER:
-                    cArr[i] = v;
-                    break;
-                case VDECIMAL:
-                    DecimalFormat df = new DecimalFormat("#.##");
-                    cArr[i] = df.format(Double.parseDouble(v));
-                    break;
-                case NONE:
-                    cArr[i] = "";
-                    break;
-                default:
-                    cArr[i] = v;
-            }
-        }
-
-        return String.join(MainApp.FIELD_DELIMETER, cArr);
-    }
-
-    protected abstract void processFile(String path);
-
-    protected abstract void cleanUp();
 
 }
 

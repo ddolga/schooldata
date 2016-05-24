@@ -1,7 +1,7 @@
 package com.nadia.data.processors.file.form;
 
-import com.nadia.data.MunicipalityCleaner;
-import com.nadia.data.processors.util.Parameters;
+import com.nadia.data.api.ParametersInterface;
+import com.nadia.data.util.Formatters;
 import com.nadia.data.api.FormProcessInterface;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -17,7 +17,7 @@ public class ExportToExcel implements FormProcessInterface {
     Workbook wb;
     FileOutputStream outStream;
 
-    public ExportToExcel(Parameters params) {
+    public ExportToExcel(ParametersInterface params) {
         createTargetWorkbook(params.getTargetFileName());
     }
 
@@ -41,7 +41,7 @@ public class ExportToExcel implements FormProcessInterface {
             int rowIdx = 0;
             while (line != null) {
                 Row row = sheet.createRow(rowIdx++);
-                String[] arr = line.split(MunicipalityCleaner.FIELD_DELIMETER);
+                String[] arr = line.split(Formatters.FIELD_DELIMETER);
                 for (int i = 0; i < arr.length; i++) {
                     Cell cell = row.createCell(i);
                     cell.setCellValue(arr[i]);

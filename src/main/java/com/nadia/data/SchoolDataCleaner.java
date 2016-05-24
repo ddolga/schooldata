@@ -1,28 +1,23 @@
 package com.nadia.data;
 
+import com.nadia.data.api.ParametersInterface;
 import com.nadia.data.api.WorkbookProcessInterface;
 import com.nadia.data.processors.file.excel.CombineToCSV;
 import com.nadia.data.processors.file.excel.ProcessAllCells;
-import com.nadia.data.processors.util.Parameters;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.nadia.data.processors.cell.Transliterator;
 import com.nadia.data.processors.cell.TransliteratorForCombine;
 
-public class SchoolDataCleaner extends MainApp {
+public class SchoolDataCleaner extends BaseImporter {
 
     Logger logger = LoggerFactory.getLogger(SchoolDataCleaner.class);
 
 
     private WorkbookProcessInterface processor;
 
-    public static void main(String[] args) {
-        Parameters params = Parameters.processParameters( args);
-        SchoolDataCleaner cleaner = new SchoolDataCleaner(params, 0);
-        cleaner.iterateOverFiles(params.getFa());
-    }
 
-    public SchoolDataCleaner(Parameters params, int limit) {
+    public SchoolDataCleaner(ParametersInterface params, int limit) {
         super(params, limit);
 
         switch (type) {
