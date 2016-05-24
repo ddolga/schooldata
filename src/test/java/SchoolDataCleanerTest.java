@@ -1,5 +1,3 @@
-import com.nadia.data.util.Parameters;
-import com.nadia.data.SchoolDataCleaner;
 import com.nadia.data.util.Formatters;
 import org.junit.Test;
 

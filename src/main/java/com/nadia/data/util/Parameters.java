@@ -1,13 +1,11 @@
 package com.nadia.data.util;
 
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Component;
+import com.nadia.data.api.ParametersInterface;
 
 import java.util.ArrayList;
 
-public class Parameters implements com.nadia.data.api.ParametersInterface, CommandLineRunner {
+public class Parameters implements ParametersInterface {
 
-    private int type;
     private String[] fa;
     private String targetFileName;
     private String header;
@@ -15,20 +13,21 @@ public class Parameters implements com.nadia.data.api.ParametersInterface, Comma
 
 
     private static final int IMPORTER_TYPE = 0;
-    private static final int FUNC_TYPE  = 1;
 
 
-    @Override
-    public void run(String... args) throws Exception {
+    public Parameters(String[] args){
+        setParameters(args);
+    }
+
+    private void setParameters(String[] args) {
 
         if (args.length > 0) {
             ArrayList<String> fa = new ArrayList<>();
 
             this.importerType = args[IMPORTER_TYPE];
 
-            this.setType(Integer.parseInt(args[FUNC_TYPE]));
             int len = args.length;
-            int nextIdx = FUNC_TYPE + 1;
+            int nextIdx = IMPORTER_TYPE + 1;
             while (nextIdx < len) {
                 if (args[nextIdx].equals("-o")) {
                     this.setTargetFileName(args[nextIdx + 1]);
@@ -43,15 +42,6 @@ public class Parameters implements com.nadia.data.api.ParametersInterface, Comma
             this.setFa(fa.toArray(new String[0]));
         }
 
-    }
-
-    @Override
-    public int getType() {
-        return type;
-    }
-
-    private void setType(int type) {
-        this.type = type;
     }
 
     @Override

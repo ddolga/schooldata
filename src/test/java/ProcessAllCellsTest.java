@@ -1,6 +1,5 @@
 import com.nadia.data.api.CellProcessorInterface;
 import com.nadia.data.api.WorkbookProcessInterface;
-import com.nadia.data.processors.file.excel.ProcessAllCells;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.junit.Before;
@@ -25,7 +24,7 @@ public class ProcessAllCellsTest {
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        transliterator = new ProcessAllCells();
+//        transliterator = new ProcessAllCells();
     }
 
     @Test

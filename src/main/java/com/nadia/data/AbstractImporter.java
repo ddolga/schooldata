@@ -1,21 +1,22 @@
 package com.nadia.data;
 
+import com.nadia.data.api.ICleanUp;
+import com.nadia.data.api.IProcessFile;
 import com.nadia.data.api.ImporterInterface;
 import com.nadia.data.api.ParametersInterface;
 
 import java.io.File;
 
-public abstract class BaseImporter implements ImporterInterface {
+public class AbstractImporter implements ImporterInterface {
 
 
-    protected int type;
-    protected int limit;
+    IProcessFile processFile;
+    ICleanUp cleanUp;
 
-    public BaseImporter(ParametersInterface params, int limit) {
-        this.type = params.getType();
-        this.limit = limit;
+    public AbstractImporter(IProcessFile processFile, ICleanUp cleanUp) {
+        this.processFile = processFile;
+        this.cleanUp = cleanUp;
     }
-
 
 
     @Override
@@ -31,26 +32,21 @@ public abstract class BaseImporter implements ImporterInterface {
 
     protected void iterateOverFiles(File[] fa) {
         _iterateOverFiles(fa);
-        cleanUp();
+        cleanUp.clean();
     }
 
 
     private void _iterateOverFiles(File[] fa) {
         for (File file : fa) {
-            if(!file.getName().startsWith(".")){
+            if (!file.getName().startsWith(".")) {
                 if (file.isDirectory()) {
                     _iterateOverFiles(file.listFiles());
                 } else {
-                    processFile(file.getAbsolutePath());
+                    processFile.process(file.getAbsolutePath());
+
                 }
             }
         }
     }
-
-
-    protected abstract void processFile(String path);
-
-    protected abstract void cleanUp();
-
 
 }

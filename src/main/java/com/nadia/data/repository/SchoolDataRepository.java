@@ -20,4 +20,10 @@ public class SchoolDataRepository implements SchoolDataInterface {
         jdbcOperations.update("UPDATE address SET metro_area = ? WHERE metro_area = ?",corrected,original);
     }
 
+    @Override
+    public void updatePopulationCityName(String original, String corrected) {
+        jdbcOperations.update("UPDATE population SET city = ? WHERE city = ?",corrected,original);
+
+    }
+
 }

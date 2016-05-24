@@ -1,46 +1,48 @@
 package com.nadia.data.processors.file.form;
 
-import com.nadia.data.util.Formatters;
-import com.nadia.data.api.FormProcessInterface;
+import com.nadia.data.api.IProcessFile;
+import com.nadia.data.api.ParametersInterface;
 import com.nadia.data.api.RegExLineProcessorInterface;
+import com.nadia.data.processors.AbstractProcessor;
+import com.nadia.data.processors.regex.RegExLineProcessor;
+import com.nadia.data.util.Formatters;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.nadia.data.processors.regex.RegExLineProcessor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.io.*;
 
-public class FormExtractorCvs implements FormProcessInterface {
+@Component
+public class FormExtractorCvs extends AbstractProcessor {
 
     Logger logger = LoggerFactory.getLogger(FormExtractorCvs.class);
     private final RegExLineProcessorInterface lineProcessor = new RegExLineProcessor();
 
+
     @Override
-    public void process(String inFileName, int limit) {
+    protected IProcessFile getProcessFile() {
+        return (String inFileName) -> {
+            try {
+                String outFileName = Formatters.formatOutputFileName(inFileName, "convert");
+                BufferedReader br = new BufferedReader(new FileReader(inFileName));
+                BufferedWriter bw = new BufferedWriter(new FileWriter(outFileName));
 
-        try {
-            String outFileName = Formatters.formatOutputFileName(inFileName,"convert");
-            BufferedReader br = new BufferedReader(new FileReader(inFileName));
-            BufferedWriter bw = new BufferedWriter(new FileWriter(outFileName));
 
-
-            String line = br.readLine();
-            while (line != null) {
-                String convertedStr = lineProcessor.process(line);
-                if (convertedStr != null) {
-                    bw.write(convertedStr);
-                    bw.newLine();
+                String line = br.readLine();
+                while (line != null) {
+                    String convertedStr = lineProcessor.process(line);
+                    if (convertedStr != null) {
+                        bw.write(convertedStr);
+                        bw.newLine();
+                    }
+                    line = br.readLine();
                 }
-                line = br.readLine();
+                br.close();
+                bw.close();
+            } catch (IOException e) {
+                logger.error(e.getLocalizedMessage());
             }
-            br.close();
-            bw.close();
-        } catch (IOException e) {
-            logger.error(e.getLocalizedMessage());
-        }
-    }
-
-    @Override
-    public void cleanUp() {
-
+        };
     }
 }

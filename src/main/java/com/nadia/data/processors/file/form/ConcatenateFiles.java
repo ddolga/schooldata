@@ -1,17 +1,20 @@
 package com.nadia.data.processors.file.form;
 
+import com.nadia.data.api.IProcessFile;
 import com.nadia.data.api.ParametersInterface;
-import com.nadia.data.util.Parameters;
-import com.nadia.data.api.FormProcessInterface;
+import com.nadia.data.processors.AbstractProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.channels.WritableByteChannel;
 
-public class ConcatenateFiles implements FormProcessInterface {
+@Component
+public class ConcatenateFiles extends AbstractProcessor {
 
     Logger logger = LoggerFactory.getLogger(ConcatenateFiles.class);
 
@@ -19,27 +22,27 @@ public class ConcatenateFiles implements FormProcessInterface {
     WritableByteChannel outputChannel;
     File targetFile = null;
 
-    public ConcatenateFiles(ParametersInterface params) {
+    @Autowired
+    public ConcatenateFiles() {
         targetFile = new File(params.getTargetFileName());
         setupOutputChannel(targetFile);
         writeHeader(params.getHeader());
     }
 
-    private void writeHeader(String header){
+    private void writeHeader(String header) {
         ByteBuffer bb = ByteBuffer.wrap((header + "\r").getBytes());
         try {
             outputChannel.write(bb);
         } catch (IOException e) {
-            logger.error("Could not write the file header",e.getStackTrace());
+            logger.error("Could not write the file header", e.getStackTrace());
         }
     }
 
     private void setupOutputChannel(File targetFile) {
         try {
-            if(targetFile.exists()){
+            if (targetFile.exists()) {
                 targetFile.delete();
             }
-
 
             FileOutputStream fos = new FileOutputStream(targetFile);
             outputChannel = fos.getChannel();
@@ -49,25 +52,20 @@ public class ConcatenateFiles implements FormProcessInterface {
     }
 
     @Override
-    public void process(String inFileName, int limit) {
+    protected IProcessFile getProcessFile() {
+        return (String inFileName) -> {
+            try {
+                //don't process the output file iteself
+                if (targetFile.getAbsolutePath().equals(new File(inFileName).getAbsolutePath()))
+                    return;
 
-        try {
-            //don't process the output file iteself
-            if(targetFile.getAbsolutePath().equals(new File(inFileName).getAbsolutePath()))
-                return;
-
-            FileInputStream fis = new FileInputStream(new File(inFileName));
-            FileChannel inputChannel = fis.getChannel();
-            inputChannel.transferTo(0, inputChannel.size(), outputChannel);
-            inputChannel.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    @Override
-    public void cleanUp() {
-
+                FileInputStream fis = new FileInputStream(new File(inFileName));
+                FileChannel inputChannel = fis.getChannel();
+                inputChannel.transferTo(0, inputChannel.size(), outputChannel);
+                inputChannel.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        };
     }
 }
