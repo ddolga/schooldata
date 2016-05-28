@@ -1,6 +1,5 @@
 package com.nadia.data.processors.corrections;
 
-import com.nadia.data.api.IProcessFile;
 import com.nadia.data.api.IUpdateRow;
 import com.nadia.data.api.SchoolDataInterface;
 import com.nadia.data.processors.AbstractProcessor;
@@ -12,13 +11,13 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 
-public abstract class  UpdateFieldAbstract extends AbstractProcessor {
+public abstract class AbstractUpdateField extends AbstractProcessor {
 
     Logger logger = LoggerFactory.getLogger(UpdateCityName.class);
 
     protected SchoolDataInterface schoolDataRepository;
 
-    public UpdateFieldAbstract( SchoolDataInterface schoolDataRepository) {
+    public AbstractUpdateField(SchoolDataInterface schoolDataRepository) {
         this.schoolDataRepository = schoolDataRepository;
     }
 

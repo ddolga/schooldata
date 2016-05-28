@@ -14,7 +14,6 @@ public class MainApp {
         ApplicationContext ctx = SpringApplication.run(MainApp.class,args);
 
         Parameters params = new Parameters(args);
-
         String importerType = params.getImporterType();
         AbstractProcessor processor = (AbstractProcessor) ctx.getBean(importerType);
         processor.doYourThing(params);

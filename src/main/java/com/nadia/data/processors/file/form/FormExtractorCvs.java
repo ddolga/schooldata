@@ -1,7 +1,6 @@
 package com.nadia.data.processors.file.form;
 
 import com.nadia.data.api.IProcessFile;
-import com.nadia.data.api.ParametersInterface;
 import com.nadia.data.api.RegExLineProcessorInterface;
 import com.nadia.data.processors.AbstractProcessor;
 import com.nadia.data.processors.regex.RegExLineProcessor;
@@ -17,8 +16,13 @@ import java.io.*;
 public class FormExtractorCvs extends AbstractProcessor {
 
     Logger logger = LoggerFactory.getLogger(FormExtractorCvs.class);
-    private final RegExLineProcessorInterface lineProcessor = new RegExLineProcessor();
 
+    private final RegExLineProcessorInterface lineProcessor;
+
+    @Autowired
+    public FormExtractorCvs(RegExLineProcessor lineProcessor){
+       this.lineProcessor = lineProcessor;
+    }
 
     @Override
     protected IProcessFile getProcessFile() {
