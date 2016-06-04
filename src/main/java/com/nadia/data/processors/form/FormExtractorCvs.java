@@ -1,6 +1,7 @@
 package com.nadia.data.processors.form;
 
 import com.nadia.data.api.RegExLineProcessorInterface;
+import com.nadia.data.errors.PatternMatchError;
 import com.nadia.data.processors.AbstractProcessor;
 import com.nadia.data.matchers.RegExLineProcessor;
 import com.nadia.data.util.Formatters;
@@ -10,6 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Formatter;
 
 @Component
 public class FormExtractorCvs extends AbstractProcessor {
@@ -19,8 +23,8 @@ public class FormExtractorCvs extends AbstractProcessor {
     private final RegExLineProcessorInterface lineProcessor;
 
     @Autowired
-    public FormExtractorCvs(RegExLineProcessor lineProcessor){
-       this.lineProcessor = lineProcessor;
+    public FormExtractorCvs(RegExLineProcessor lineProcessor) {
+        this.lineProcessor = lineProcessor;
     }
 
 
@@ -28,6 +32,7 @@ public class FormExtractorCvs extends AbstractProcessor {
     public void setup() throws FileNotFoundException {
 
     }
+
 
     @Override
     public void process(String inFileName) {
@@ -37,11 +42,15 @@ public class FormExtractorCvs extends AbstractProcessor {
             BufferedReader br = new BufferedReader(new FileReader(inFileName));
             BufferedWriter bw = new BufferedWriter(new FileWriter(outFileName));
 
+            String dateStr = Formatters.getYearFromFileName(inFileName);
 
             String line = br.readLine();
             while (line != null) {
-                String convertedStr = lineProcessor.process(line);
-                if (convertedStr != null) {
+                String[] strArr = lineProcessor.process(line);
+                if (strArr != null && strArr.length > 0) {
+//                    String[] strArr2 = Formatters.insertIntoArray(strArr, 1, dateStr);
+//                    String convertedStr = Formatters.combineToRow(strArr2);
+                    String convertedStr = Formatters.combineToRow(strArr);
                     bw.write(convertedStr);
                     bw.newLine();
                 }
@@ -49,7 +58,7 @@ public class FormExtractorCvs extends AbstractProcessor {
             }
             br.close();
             bw.close();
-        } catch (IOException e) {
+        } catch (IOException | PatternMatchError e) {
             logger.error(e.getLocalizedMessage());
         }
     }

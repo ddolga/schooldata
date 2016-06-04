@@ -54,16 +54,16 @@ public class RegExLineProcessor implements RegExLineProcessorInterface {
                 return null;
             });
 
-//    private final LinePatternMatcher datePatternMatcher = new LinePatternMatcher(DATE_MATCH_STR,
-//            (matcher) -> {
-//                if (matcher.groupCount() != 1)
-//                    throw new PatternMatchError();
-//
-//                date = matcher.group(1);
-//
-//                return null;
-//            }
-//    );
+    private final LinePatternMatcher datePatternMatcher = new LinePatternMatcher(DATE_MATCH_STR,
+            (matcher) -> {
+                if (matcher.groupCount() != 1)
+                    throw new PatternMatchError();
+
+                date = matcher.group(1);
+
+                return null;
+            }
+    );
 
 
     private final LinePatternMatcher rowPatternMatcher = new LinePatternMatcher(ROW_MATCH_STR,
@@ -101,7 +101,7 @@ public class RegExLineProcessor implements RegExLineProcessorInterface {
                     }
                     row_count_check++;
 
-                    return combineToRow(rowArr);
+                    return rowArr;
                 } catch (Exception e) {
                     throw new PatternMatchError();
                 }
@@ -134,7 +134,7 @@ public class RegExLineProcessor implements RegExLineProcessorInterface {
                         rowArr[COL_CITY + i] = val.isEmpty() ? "0" : val;
                     }
 
-                    return combineToRow(rowArr);
+                    return rowArr;
                 } catch (Exception e) {
                     throw new PatternMatchError();
                 }
@@ -158,7 +158,7 @@ public class RegExLineProcessor implements RegExLineProcessorInterface {
                     match = match && (subtotal_check_arr[i] == totals[i]);
                 }
                 if (!match)
-                    logger.error(String.format("Totals did not match: %s, %s: %s", region, municipality, row_count_check));
+                    logger.error(String.format("Totals did not match:%s, %s, %s: %s", date, region, municipality, row_count_check));
 
                 for (int i = 0; i < subtotal_check_arr.length; i++) {
                     subtotal_check_arr[i] = 0;
@@ -169,12 +169,13 @@ public class RegExLineProcessor implements RegExLineProcessorInterface {
             }
     );
 
-    private LinePatternMatcher[] linePatternMatcher = {oblastPatternMatcher,
+    private LinePatternMatcher[] linePatternMatcher = {datePatternMatcher, oblastPatternMatcher,
             obshchinaPatternMatcher, titlePatternMatcher, rowPatternMatcher, subRowPatternMatcher,
             totalPatternMatcher};
 
+
     @Override
-    public String process(String line) {
+    public String[] process(String line) {
 
         for (LinePatternMatcher matcher : linePatternMatcher) {
             if (matcher.match(line)) {

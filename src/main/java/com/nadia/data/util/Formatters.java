@@ -2,6 +2,7 @@ package com.nadia.data.util;
 
 import com.nadia.data.errors.PatternMatchError;
 
+import java.io.File;
 import java.text.DecimalFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -61,6 +62,29 @@ public class Formatters {
     public static String[] splitFiles(String s) {
         String[] names = s.split("\\,[\\s]*");
         return names;
+    }
+
+
+    public static String[] insertIntoArray(String[] originalArr, int idx, String value) {
+
+        String[] targetArr = new String[originalArr.length + 1];
+
+        for (int i = 0, t = 0; i < targetArr.length; i++) {
+            targetArr[i] = i == idx ? value : originalArr[t++];
+        }
+
+        return targetArr;
+    }
+
+
+    public static String getYearFromFileName(String fileName){
+        Pattern pattern = Pattern.compile("\\/[\\w\\d]*([0-9]{4}).*\\.[\\w]{3}");
+        Matcher matcher = pattern.matcher(fileName);
+        if(matcher.find()){
+            return matcher.group(1);
+        }
+
+        return null;
     }
 
     public static ValueType getStrType(String str) {
