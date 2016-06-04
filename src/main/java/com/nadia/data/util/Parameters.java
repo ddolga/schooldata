@@ -2,6 +2,7 @@ package com.nadia.data.util;
 
 import com.nadia.data.api.ParametersInterface;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class Parameters implements ParametersInterface {
@@ -57,7 +58,10 @@ public class Parameters implements ParametersInterface {
     }
 
     @Override
-    public String getTargetFileName() {
+    public String getTargetFileName() throws FileNotFoundException {
+        if(targetFileName == null)
+            throw new FileNotFoundException("Target file not specified");
+
         return targetFileName;
     }
 

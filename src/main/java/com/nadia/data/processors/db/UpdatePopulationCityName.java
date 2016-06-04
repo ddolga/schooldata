@@ -5,12 +5,19 @@ import org.apache.poi.ss.usermodel.Row;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.io.FileNotFoundException;
+
 @Component
 public class UpdatePopulationCityName extends AbstractUpdateField {
 
     @Autowired
     public UpdatePopulationCityName(SchoolDataInterface schoolDataRepository) {
         super(schoolDataRepository);
+    }
+
+    @Override
+    public void setup() throws FileNotFoundException {
+
     }
 
     @Override
@@ -26,5 +33,10 @@ public class UpdatePopulationCityName extends AbstractUpdateField {
                 logger.info("Skipped: " + original + " --> " + corrected);
             }
         });
+    }
+
+    @Override
+    public void cleanUp() {
+
     }
 }

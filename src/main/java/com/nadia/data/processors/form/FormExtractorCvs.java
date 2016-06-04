@@ -25,6 +25,11 @@ public class FormExtractorCvs extends AbstractProcessor {
 
 
     @Override
+    public void setup() throws FileNotFoundException {
+
+    }
+
+    @Override
     public void process(String inFileName) {
 
         try {
@@ -47,5 +52,10 @@ public class FormExtractorCvs extends AbstractProcessor {
         } catch (IOException e) {
             logger.error(e.getLocalizedMessage());
         }
+    }
+
+    @Override
+    public void cleanUp() {
+
     }
 }

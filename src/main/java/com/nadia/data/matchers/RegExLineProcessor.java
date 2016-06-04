@@ -54,16 +54,16 @@ public class RegExLineProcessor implements RegExLineProcessorInterface {
                 return null;
             });
 
-    private final LinePatternMatcher datePatternMatcher = new LinePatternMatcher(DATE_MATCH_STR,
-            (matcher) -> {
-                if (matcher.groupCount() != 1)
-                    throw new PatternMatchError();
-
-                date = matcher.group(1);
-
-                return null;
-            }
-    );
+//    private final LinePatternMatcher datePatternMatcher = new LinePatternMatcher(DATE_MATCH_STR,
+//            (matcher) -> {
+//                if (matcher.groupCount() != 1)
+//                    throw new PatternMatchError();
+//
+//                date = matcher.group(1);
+//
+//                return null;
+//            }
+//    );
 
 
     private final LinePatternMatcher rowPatternMatcher = new LinePatternMatcher(ROW_MATCH_STR,
@@ -169,7 +169,7 @@ public class RegExLineProcessor implements RegExLineProcessorInterface {
             }
     );
 
-    private LinePatternMatcher[] linePatternMatcher = {datePatternMatcher, oblastPatternMatcher,
+    private LinePatternMatcher[] linePatternMatcher = {oblastPatternMatcher,
             obshchinaPatternMatcher, titlePatternMatcher, rowPatternMatcher, subRowPatternMatcher,
             totalPatternMatcher};
 

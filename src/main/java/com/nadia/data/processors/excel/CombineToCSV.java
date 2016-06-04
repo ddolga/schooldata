@@ -9,10 +9,7 @@ import org.apache.poi.ss.usermodel.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 
 import static com.nadia.data.util.Formatters.combineToRow;
 
@@ -30,6 +27,11 @@ public class CombineToCSV extends AbstractProcessor {
     private void writeHeader(BufferedWriter out, String header) throws IOException {
         out.write(header);
         out.newLine();
+    }
+
+    @Override
+    public void setup() throws FileNotFoundException {
+
     }
 
     @Override
@@ -82,6 +84,11 @@ public class CombineToCSV extends AbstractProcessor {
         } catch (IOException | InvalidFormatException | PatternMatchError e) {
             e.printStackTrace();
         }
+
+    }
+
+    @Override
+    public void cleanUp() {
 
     }
 }

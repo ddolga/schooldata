@@ -17,6 +17,11 @@ public class FormTransliterator extends AbstractProcessor {
     private static final String lineSeparator = System.getProperty("line.separator");
 
     @Override
+    public void setup() throws FileNotFoundException {
+
+    }
+
+    @Override
     public void process(String inFileName) {
 
         try {
@@ -35,5 +40,10 @@ public class FormTransliterator extends AbstractProcessor {
         } catch (IOException e) {
             logger.error(e.getLocalizedMessage());
         }
+    }
+
+    @Override
+    public void cleanUp() {
+
     }
 }

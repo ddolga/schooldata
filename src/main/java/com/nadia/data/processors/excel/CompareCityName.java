@@ -6,10 +6,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import java.io.FileNotFoundException;
+
 @Component
 public class CompareCityName extends Cellabrate {
 
     Logger logger = LoggerFactory.getLogger(CompareCityName.class);
+
+    @Override
+    public void setup() throws FileNotFoundException {
+
+    }
 
     @Override
     public void process(String inFileName) {
@@ -34,5 +41,10 @@ public class CompareCityName extends Cellabrate {
 
 //                    logger.info(c1 + " --> " + c2 + "= " + distance);
                 });
+    }
+
+    @Override
+    public void cleanUp() {
+
     }
 }

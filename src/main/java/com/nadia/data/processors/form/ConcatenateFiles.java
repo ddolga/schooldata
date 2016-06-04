@@ -20,6 +20,14 @@ public class ConcatenateFiles extends AbstractProcessor {
     File targetFile = null;
 
 
+    @Override
+    public void setup() throws FileNotFoundException {
+        targetFile = new File(params.getTargetFileName());
+        setupOutputChannel(targetFile);
+        writeHeader(params.getHeader());
+    }
+
+
     private void writeHeader(String header) {
         ByteBuffer bb = ByteBuffer.wrap((header + "\r").getBytes());
         try {
@@ -44,11 +52,7 @@ public class ConcatenateFiles extends AbstractProcessor {
 
 
     @Override
-    public void process(String inFileName) {
-
-        targetFile = new File(params.getTargetFileName());
-        setupOutputChannel(targetFile);
-        writeHeader(params.getHeader());
+    public void process(String inFileName){
 
         try {
             //don't process the output file iteself
@@ -63,4 +67,10 @@ public class ConcatenateFiles extends AbstractProcessor {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public void cleanUp() {
+
+    }
+
 }
