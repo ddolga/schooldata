@@ -16,10 +16,8 @@ public class MainApp {
         Parameters params = new Parameters(args);
         String importerType = params.getImporterType();
         AbstractProcessor processor = (AbstractProcessor) ctx.getBean(importerType);
-        processor.doYourThing(params);
+        processor.doYourThing(new FileIterator(processor),   params);
     }
-
-
 }
 
 

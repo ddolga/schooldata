@@ -1,21 +1,17 @@
 package com.nadia.data;
 
-import com.nadia.data.api.ICleanUp;
 import com.nadia.data.api.IProcessFile;
-import com.nadia.data.api.ImporterInterface;
-import com.nadia.data.api.ParametersInterface;
+import com.nadia.data.api.IFileIterator;
 
 import java.io.File;
 
-public class AbstractImporter implements ImporterInterface {
+public class FileIterator implements IFileIterator {
 
 
     IProcessFile processFile;
-    ICleanUp cleanUp;
 
-    public AbstractImporter(IProcessFile processFile, ICleanUp cleanUp) {
+    public FileIterator(IProcessFile processFile) {
         this.processFile = processFile;
-        this.cleanUp = cleanUp;
     }
 
 
@@ -32,7 +28,7 @@ public class AbstractImporter implements ImporterInterface {
 
     protected void iterateOverFiles(File[] fa) {
         _iterateOverFiles(fa);
-        cleanUp.clean();
+        processFile.cleanUp();
     }
 
 

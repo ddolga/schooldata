@@ -1,4 +1,4 @@
-package com.nadia.data.processors.regex;
+package com.nadia.data.matchers;
 
 import com.nadia.data.api.RegExLineProcessorInterface;
 import com.nadia.data.errors.PatternMatchError;
@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import static com.nadia.data.processors.regex.RegexPatterns.*;
+import static com.nadia.data.matchers.RegexPatterns.*;
 import static com.nadia.data.util.Formatters.combineToRow;
 
 @Component
@@ -23,7 +23,7 @@ public class RegExLineProcessor implements RegExLineProcessorInterface {
     private int parent_id = 0;
 
 
-    private LinePatternMatcher titlePatternMatcher = new LinePatternMatcher(TITLE_MATCH_STR,
+    private final LinePatternMatcher titlePatternMatcher = new LinePatternMatcher(TITLE_MATCH_STR,
             (matcher) -> {
                 if (matcher.groupCount() != 2)
                     throw new PatternMatchError();
@@ -35,7 +35,7 @@ public class RegExLineProcessor implements RegExLineProcessorInterface {
             }
     );
 
-    private LinePatternMatcher oblastPatternMatcher = new LinePatternMatcher(OBLAST_MATCH_STR,
+    private final LinePatternMatcher oblastPatternMatcher = new LinePatternMatcher(OBLAST_MATCH_STR,
             (matcher) -> {
                 if (matcher.groupCount() != 1)
                     throw new PatternMatchError();
@@ -43,7 +43,7 @@ public class RegExLineProcessor implements RegExLineProcessorInterface {
                 return null;
             });
 
-    private LinePatternMatcher obshchinaPatternMatcher = new LinePatternMatcher(OBSHCHINA_MATCH_STR,
+    private final LinePatternMatcher obshchinaPatternMatcher = new LinePatternMatcher(OBSHCHINA_MATCH_STR,
             (matcher) -> {
 
                 if (matcher.groupCount() != 1)
@@ -54,7 +54,7 @@ public class RegExLineProcessor implements RegExLineProcessorInterface {
                 return null;
             });
 
-    private LinePatternMatcher datePatternMatcher = new LinePatternMatcher(DATE_MATCH_STR,
+    private final LinePatternMatcher datePatternMatcher = new LinePatternMatcher(DATE_MATCH_STR,
             (matcher) -> {
                 if (matcher.groupCount() != 1)
                     throw new PatternMatchError();
@@ -62,10 +62,11 @@ public class RegExLineProcessor implements RegExLineProcessorInterface {
                 date = matcher.group(1);
 
                 return null;
-            });
+            }
+    );
 
 
-    private LinePatternMatcher rowPatternMatcher = new LinePatternMatcher(ROW_MATCH_STR, (
+    private final LinePatternMatcher rowPatternMatcher = new LinePatternMatcher(ROW_MATCH_STR,
             (matcher) -> {
                 final int MAX_COLUMNS = 14;
                 final int COL_CITY = 5;
@@ -105,10 +106,10 @@ public class RegExLineProcessor implements RegExLineProcessorInterface {
                     throw new PatternMatchError();
                 }
             }
-    ));
+    );
 
 
-    private LinePatternMatcher subRowPatternMatcher = new LinePatternMatcher(SUB_ROW_MATCH_STR, (
+    private final LinePatternMatcher subRowPatternMatcher = new LinePatternMatcher(SUB_ROW_MATCH_STR,
             (matcher) -> {
                 final int MAX_COLUMNS = 15;
                 final int COL_CITY = 5;
@@ -138,9 +139,9 @@ public class RegExLineProcessor implements RegExLineProcessorInterface {
                     throw new PatternMatchError();
                 }
             }
-    ));
+    );
 
-    private LinePatternMatcher totalPatternMatcher = new LinePatternMatcher(TOTAL_MATCH_STR, (
+    private final LinePatternMatcher totalPatternMatcher = new LinePatternMatcher(TOTAL_MATCH_STR,
 
             (matcher) -> {
                 if (matcher.groupCount() != 9)
@@ -165,22 +166,20 @@ public class RegExLineProcessor implements RegExLineProcessorInterface {
                 row_count_check = 0;
 
                 return null;
-
             }
-    ));
+    );
 
-    private LinePatternMatcher[] LinePatternMatcherAbstracts = {datePatternMatcher, oblastPatternMatcher,
+    private LinePatternMatcher[] linePatternMatcher = {datePatternMatcher, oblastPatternMatcher,
             obshchinaPatternMatcher, titlePatternMatcher, rowPatternMatcher, subRowPatternMatcher,
             totalPatternMatcher};
-
 
     @Override
     public String process(String line) {
 
-        for (LinePatternMatcher LinePatternMatcherAbstract : LinePatternMatcherAbstracts) {
-            if (LinePatternMatcherAbstract.match(line)) {
+        for (LinePatternMatcher matcher : linePatternMatcher) {
+            if (matcher.match(line)) {
                 try {
-                    return LinePatternMatcherAbstract.parse();
+                    return matcher.parse();
                 } catch (PatternMatchError patternMatchError) {
                     logger.error("Error at line:" + line);
                 }

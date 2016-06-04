@@ -1,8 +1,6 @@
 package com.nadia.data.api;
 
-@FunctionalInterface
 public interface IProcessFile {
-
-    void process(String path);
-
+    void process(String inFileName);
+    void cleanUp();
 }

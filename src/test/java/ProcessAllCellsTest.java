@@ -1,22 +1,20 @@
 import com.nadia.data.api.CellProcessorInterface;
-import com.nadia.data.api.WorkbookProcessInterface;
+import com.nadia.data.api.IProcessFile;
+import com.nadia.data.processors.excel.ProcessAllCells;
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Workbook;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentMatcher;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import com.nadia.data.processors.cell.Transliterator;
 
-import static org.junit.Assert.*;
 import static org.mockito.Matchers.argThat;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 public class ProcessAllCellsTest {
 
-    WorkbookProcessInterface transliterator;
+    IProcessFile transliterator;
 
     @Mock
     CellProcessorInterface processor;
@@ -24,13 +22,12 @@ public class ProcessAllCellsTest {
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-//        transliterator = new ProcessAllCells();
+        transliterator = new ProcessAllCells(processor);
     }
 
     @Test
     public void testProcess() throws Exception {
-
-        transliterator.process("./data/original/Teachers_Test.xlsx",processor,0);
+        transliterator.process("./data/original/Teachers_Test.xlsx");
 
         ArgumentMatcher<Cell> matcher = new ArgumentMatcher<Cell>() {
             @Override
@@ -41,11 +38,4 @@ public class ProcessAllCellsTest {
         verify(processor, times(24)).processCell(argThat(matcher));
     }
 
-
-    @Test
-    public void testWalkCells2() throws Exception {
-        Workbook wb = transliterator.process("./data/original/Teachers_Test.xlsx",  new Transliterator(),0);
-        String result = wb.getSheetAt(0).getRow(3).getCell(3).getStringCellValue();
-        assertEquals("uchitiel", result);
-    }
 }

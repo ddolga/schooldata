@@ -1,24 +1,19 @@
 package com.nadia.data.processors;
 
-import com.nadia.data.AbstractImporter;
-import com.nadia.data.api.*;
+import com.nadia.data.api.IFileIterator;
+import com.nadia.data.api.IProcessFile;
+import com.nadia.data.api.ParametersInterface;
 import com.nadia.data.util.Parameters;
 
-public abstract class AbstractProcessor {
-
-    private ICleanUp cleanUp = () -> this.cleanUp();
+public abstract class AbstractProcessor implements IProcessFile {
 
     protected ParametersInterface params;
 
-    public void doYourThing(Parameters params) {
+    public void doYourThing(IFileIterator fileIterator, Parameters params) {
         this.params = params;
-        ImporterInterface importer = new AbstractImporter(getProcessFile(), cleanUp);
-        importer.iterateOverFiles(params.getFa());
+        fileIterator.iterateOverFiles(params.getFa());
     }
 
-    public void cleanUp() {
-        //do nothing for now
-    }
+    public void cleanUp(){}
 
-    protected abstract IProcessFile getProcessFile();
 }

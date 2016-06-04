@@ -15,7 +15,7 @@ public class Parameters implements ParametersInterface {
     private static final int IMPORTER_TYPE = 0;
 
 
-    public Parameters(String[] args){
+    public Parameters(String[] args) {
         setParameters(args);
     }
 
@@ -35,6 +35,9 @@ public class Parameters implements ParametersInterface {
                 } else if (args[nextIdx].equals("-h")) {
                     this.setHeader(args[nextIdx + 1]);
                     nextIdx = nextIdx + 2;
+                } else if (args[nextIdx].startsWith("--")) {
+                    //skip spring arguments
+                    nextIdx++;
                 } else {
                     fa.add(args[nextIdx++]);
                 }

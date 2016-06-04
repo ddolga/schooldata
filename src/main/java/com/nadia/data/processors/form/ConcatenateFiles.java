@@ -1,11 +1,8 @@
-package com.nadia.data.processors.file.form;
+package com.nadia.data.processors.form;
 
-import com.nadia.data.api.IProcessFile;
-import com.nadia.data.api.ParametersInterface;
 import com.nadia.data.processors.AbstractProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
@@ -45,26 +42,25 @@ public class ConcatenateFiles extends AbstractProcessor {
         }
     }
 
+
     @Override
-    protected IProcessFile getProcessFile() {
-        return (String inFileName) -> {
+    public void process(String inFileName) {
 
-            targetFile = new File(params.getTargetFileName());
-            setupOutputChannel(targetFile);
-            writeHeader(params.getHeader());
+        targetFile = new File(params.getTargetFileName());
+        setupOutputChannel(targetFile);
+        writeHeader(params.getHeader());
 
-            try {
-                //don't process the output file iteself
-                if (targetFile.getAbsolutePath().equals(new File(inFileName).getAbsolutePath()))
-                    return;
+        try {
+            //don't process the output file iteself
+            if (targetFile.getAbsolutePath().equals(new File(inFileName).getAbsolutePath()))
+                return;
 
-                FileInputStream fis = new FileInputStream(new File(inFileName));
-                FileChannel inputChannel = fis.getChannel();
-                inputChannel.transferTo(0, inputChannel.size(), outputChannel);
-                inputChannel.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        };
+            FileInputStream fis = new FileInputStream(new File(inFileName));
+            FileChannel inputChannel = fis.getChannel();
+            inputChannel.transferTo(0, inputChannel.size(), outputChannel);
+            inputChannel.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
