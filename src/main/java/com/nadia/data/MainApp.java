@@ -1,10 +1,13 @@
 package com.nadia.data;
 
 import com.nadia.data.processors.AbstractProcessor;
+import com.nadia.data.repository.DataSourceFactory;
 import com.nadia.data.util.Parameters;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Bean;
+import org.springframework.jdbc.core.JdbcOperations;
 
 
 @SpringBootApplication

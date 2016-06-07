@@ -7,6 +7,8 @@ import java.text.DecimalFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.nadia.data.errors.PatternMatchError.GROUP__COUNT_ERROR;
+
 public class Formatters {
 
     public static final String FIELD_DELIMETER = ",";
@@ -23,7 +25,7 @@ public class Formatters {
                     if (m.find() && m.groupCount() == 3) {
                         cArr[i] = m.group(3) + "-" + m.group(2) + "-" + m.group(1);
                     } else {
-                        throw new PatternMatchError();
+                        throw new PatternMatchError(GROUP__COUNT_ERROR);
                     }
                     break;
                 case VSTRING:

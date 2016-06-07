@@ -42,19 +42,17 @@ public class FormExtractorCvs extends AbstractProcessor {
             BufferedReader br = new BufferedReader(new FileReader(inFileName));
             BufferedWriter bw = new BufferedWriter(new FileWriter(outFileName));
 
-            String dateStr = Formatters.getYearFromFileName(inFileName);
-
             String line = br.readLine();
+            int lineNo = 1;
             while (line != null) {
                 String[] strArr = lineProcessor.process(line);
                 if (strArr != null && strArr.length > 0) {
-//                    String[] strArr2 = Formatters.insertIntoArray(strArr, 1, dateStr);
-//                    String convertedStr = Formatters.combineToRow(strArr2);
                     String convertedStr = Formatters.combineToRow(strArr);
                     bw.write(convertedStr);
                     bw.newLine();
                 }
                 line = br.readLine();
+                lineNo++;
             }
             br.close();
             bw.close();

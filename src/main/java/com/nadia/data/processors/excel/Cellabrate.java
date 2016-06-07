@@ -16,9 +16,6 @@ import java.io.IOException;
 public abstract class Cellabrate extends AbstractProcessor {
 
 
-    public Cellabrate() {
-    }
-
     public void process(String inFileName, String prefix, IRowProcessor rowProcessor) {
 
         String outFileName = Formatters.formatOutputFileName(inFileName, prefix);
@@ -40,6 +37,8 @@ public abstract class Cellabrate extends AbstractProcessor {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+            } else {
+                wb.close();
             }
 
         } catch (IOException | InvalidFormatException e) {
