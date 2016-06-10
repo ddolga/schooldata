@@ -26,7 +26,7 @@ public class DeleteMatchingRows extends Cellabrate {
     }
 
     private void updateRow(int id, String field, String newValue) {
-        schoolDataRepository.updateCityName(id,newValue);
+//        schoolDataRepository.updateCityName(id,newValue);
 
     }
 
