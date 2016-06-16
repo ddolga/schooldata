@@ -1,10 +1,12 @@
 package com.nadia.data.api;
 
+import java.io.FileNotFoundException;
+
 public interface ParametersInterface {
 
     String[] getFa();
 
-    String getTargetFileName();
+    String getTargetFileName() throws FileNotFoundException;
 
     String getHeader();
 

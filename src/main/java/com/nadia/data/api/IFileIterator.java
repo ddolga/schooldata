@@ -1,8 +1,11 @@
 package com.nadia.data.api;
 
-/**
- * Created by Denis on 5/22/16.
- */
+import java.io.FileNotFoundException;
+
 public interface IFileIterator {
-    void iterateOverFiles(String[] fs);
+
+    void iterateOverFiles(String[] fs) throws FileNotFoundException;
+
+    void setProcessFile(IProcessFile processFile);
+
 }

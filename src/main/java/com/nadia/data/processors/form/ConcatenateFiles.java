@@ -1,8 +1,10 @@
 package com.nadia.data.processors.form;
 
+import com.nadia.data.api.IFileIterator;
 import com.nadia.data.processors.AbstractProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
@@ -18,6 +20,19 @@ public class ConcatenateFiles extends AbstractProcessor {
 
     WritableByteChannel outputChannel;
     File targetFile = null;
+
+    @Autowired
+    public ConcatenateFiles(IFileIterator fileIterator) {
+        super(fileIterator);
+    }
+
+
+    @Override
+    public void setup() throws FileNotFoundException {
+        targetFile = new File(params.getTargetFileName());
+        setupOutputChannel(targetFile);
+        writeHeader(params.getHeader());
+    }
 
 
     private void writeHeader(String header) {
@@ -44,11 +59,7 @@ public class ConcatenateFiles extends AbstractProcessor {
 
 
     @Override
-    public void process(String inFileName) {
-
-        targetFile = new File(params.getTargetFileName());
-        setupOutputChannel(targetFile);
-        writeHeader(params.getHeader());
+    public void process(String inFileName){
 
         try {
             //don't process the output file iteself
@@ -63,4 +74,10 @@ public class ConcatenateFiles extends AbstractProcessor {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public void cleanUp() {
+
+    }
+
 }

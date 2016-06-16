@@ -1,17 +1,25 @@
 package com.nadia.data.processors.db;
 
+import com.nadia.data.api.IFileIterator;
 import com.nadia.data.api.SchoolDataInterface;
 import org.apache.poi.ss.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.io.FileNotFoundException;
 
 @Component
 public class UpdateCityName extends AbstractUpdateField {
 
 
     @Autowired
-    public UpdateCityName( SchoolDataInterface schoolDataRepository) {
-        super(schoolDataRepository);
+    public UpdateCityName(IFileIterator fileIterator, SchoolDataInterface schoolDataRepository) {
+        super(fileIterator,schoolDataRepository);
+    }
+
+    @Override
+    public void setup() throws FileNotFoundException {
+
     }
 
     @Override
@@ -26,5 +34,10 @@ public class UpdateCityName extends AbstractUpdateField {
                 logger.info("Skipped: " + original + " --> " + corrected);
             }
         });
+    }
+
+    @Override
+    public void cleanUp() {
+
     }
 }

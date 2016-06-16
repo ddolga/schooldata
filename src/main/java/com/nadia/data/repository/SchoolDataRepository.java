@@ -11,18 +11,18 @@ public class SchoolDataRepository implements SchoolDataInterface {
     JdbcOperations jdbcOperations;
 
     @Autowired
-    public SchoolDataRepository(JdbcOperations jdbcOperations) {
-        this.jdbcOperations = jdbcOperations;
+    public SchoolDataRepository(DataSourceFactory dataSourceFactory) {
+        this.jdbcOperations = dataSourceFactory.getJdbcTemplate("school_reform");
     }
 
     @Override
-    public void updateCityName(String original, String corrected){
-        jdbcOperations.update("UPDATE address SET metro_area = ? WHERE metro_area = ?",corrected,original);
+    public void updateCityName(String original, String corrected) {
+        jdbcOperations.update("UPDATE address SET metro_area = ? WHERE metro_area = ?", corrected, original);
     }
 
     @Override
     public void updatePopulationCityName(String original, String corrected) {
-        jdbcOperations.update("UPDATE population SET city = ? WHERE city = ?",corrected,original);
+        jdbcOperations.update("UPDATE population SET city = ? WHERE city = ?", corrected, original);
 
     }
 

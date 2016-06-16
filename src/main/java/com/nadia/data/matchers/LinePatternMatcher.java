@@ -13,7 +13,7 @@ public class LinePatternMatcher {
 
     @FunctionalInterface
     interface IParser {
-        String regexParse(Matcher matcher) throws PatternMatchError;
+        String[] regexParse(Matcher matcher) throws PatternMatchError;
     }
 
     private IParser parser;
@@ -28,8 +28,7 @@ public class LinePatternMatcher {
         return matcher.find();
     }
 
-    //    abstract public String parse() throws PatternMatchError;
-    public String parse() throws PatternMatchError {
+    public String[] parse() throws PatternMatchError {
         return parser.regexParse(matcher);
     }
 

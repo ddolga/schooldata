@@ -1,5 +1,6 @@
 package com.nadia.data;
 
+import com.nadia.data.api.IProcessor;
 import com.nadia.data.processors.AbstractProcessor;
 import com.nadia.data.util.Parameters;
 import org.springframework.boot.SpringApplication;
@@ -15,9 +16,10 @@ public class MainApp {
 
         Parameters params = new Parameters(args);
         String importerType = params.getImporterType();
-        AbstractProcessor processor = (AbstractProcessor) ctx.getBean(importerType);
-        processor.doYourThing(new FileIterator(processor),   params);
+        IProcessor processor = (IProcessor) ctx.getBean(importerType);
+        processor.doYaThing(params);
     }
+
 }
 
 

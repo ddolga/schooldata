@@ -4,19 +4,22 @@ import com.nadia.data.api.IProcessFile;
 import com.nadia.data.api.IFileIterator;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 
 public class FileIterator implements IFileIterator {
 
 
     IProcessFile processFile;
 
-    public FileIterator(IProcessFile processFile) {
+
+
+    public void setProcessFile(IProcessFile processFile){
         this.processFile = processFile;
     }
 
 
     @Override
-    public void iterateOverFiles(String[] fs) {
+    public void iterateOverFiles(String[] fs) throws FileNotFoundException {
 
         File[] fa = new File[fs.length];
         for (int i = 0; i < fs.length; i++) {
@@ -26,7 +29,8 @@ public class FileIterator implements IFileIterator {
         iterateOverFiles(fa);
     }
 
-    protected void iterateOverFiles(File[] fa) {
+    protected void iterateOverFiles(File[] fa) throws FileNotFoundException {
+        processFile.setup();
         _iterateOverFiles(fa);
         processFile.cleanUp();
     }

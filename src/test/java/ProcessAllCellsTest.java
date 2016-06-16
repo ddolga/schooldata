@@ -1,3 +1,4 @@
+import com.nadia.data.FileIterator;
 import com.nadia.data.api.CellProcessorInterface;
 import com.nadia.data.api.IProcessFile;
 import com.nadia.data.processors.excel.ProcessAllCells;
@@ -22,7 +23,7 @@ public class ProcessAllCellsTest {
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        transliterator = new ProcessAllCells(processor);
+        transliterator = new ProcessAllCells(new FileIterator(), processor);
     }
 
     @Test
