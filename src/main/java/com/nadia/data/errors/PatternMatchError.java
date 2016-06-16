@@ -5,7 +5,7 @@ public class PatternMatchError extends Exception {
 
 
     public static final String GROUP__COUNT_ERROR = "Group count does not match expected";
-    public static final String REGION_MUNI_NOT_SET_ERROR = "Region and/or Municipality have not been set";
+    public static final String REGION_MUNI_NOT_SET_ERROR = "Node and/or Municipality have not been set";
 
 
 

@@ -1,6 +1,7 @@
 package com.nadia.data.processors.excel;
 
 
+import com.nadia.data.api.IFileIterator;
 import com.nadia.data.repository.SchoolDataRepository;
 import org.apache.poi.ss.usermodel.Cell;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,8 @@ public class DeleteMatchingRows extends Cellabrate {
 
 
     @Autowired
-    public DeleteMatchingRows(SchoolDataRepository schoolDataRepository) {
+    public DeleteMatchingRows(IFileIterator fileIterator,SchoolDataRepository schoolDataRepository) {
+        super(fileIterator);
         this.schoolDataRepository = schoolDataRepository;
     }
 

@@ -1,5 +1,6 @@
 package com.nadia.data.processors.db;
 
+import com.nadia.data.api.IFileIterator;
 import com.nadia.data.api.SchoolDataInterface;
 import org.apache.poi.ss.usermodel.Row;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +12,8 @@ import java.io.FileNotFoundException;
 public class UpdatePopulationCityName extends AbstractUpdateField {
 
     @Autowired
-    public UpdatePopulationCityName(SchoolDataInterface schoolDataRepository) {
-        super(schoolDataRepository);
+    public UpdatePopulationCityName(IFileIterator fileIterator, SchoolDataInterface schoolDataRepository) {
+        super(fileIterator, schoolDataRepository);
     }
 
     @Override
@@ -23,7 +24,7 @@ public class UpdatePopulationCityName extends AbstractUpdateField {
     @Override
     public void process(String inFileName) {
 
-        _processFile(inFileName,(Row row) -> {
+        _processFile(inFileName, (Row row) -> {
             String original = getCell(row, 2);
             String corrected = getCell(row, 3);
             if (original != null && corrected != null) {

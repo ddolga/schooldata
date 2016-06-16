@@ -1,5 +1,6 @@
 package com.nadia.data.processors.form;
 
+import com.nadia.data.api.IFileIterator;
 import com.nadia.data.api.RegExLineProcessorInterface;
 import com.nadia.data.errors.PatternMatchError;
 import com.nadia.data.processors.AbstractProcessor;
@@ -22,8 +23,10 @@ public class FormExtractorCvs extends AbstractProcessor {
 
     private final RegExLineProcessorInterface lineProcessor;
 
+
     @Autowired
-    public FormExtractorCvs(RegExLineProcessor lineProcessor) {
+    public FormExtractorCvs(IFileIterator fileIterator, RegExLineProcessor lineProcessor) {
+        super(fileIterator);
         this.lineProcessor = lineProcessor;
     }
 

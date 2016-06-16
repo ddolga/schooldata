@@ -11,7 +11,9 @@ public class FileIterator implements IFileIterator {
 
     IProcessFile processFile;
 
-    public FileIterator(IProcessFile processFile) {
+
+
+    public void setProcessFile(IProcessFile processFile){
         this.processFile = processFile;
     }
 

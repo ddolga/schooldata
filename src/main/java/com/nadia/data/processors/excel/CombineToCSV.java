@@ -1,6 +1,7 @@
 package com.nadia.data.processors.excel;
 
 import com.nadia.data.api.CellProcessorInterface;
+import com.nadia.data.api.IFileIterator;
 import com.nadia.data.errors.PatternMatchError;
 import com.nadia.data.processors.AbstractProcessor;
 import com.nadia.data.util.Formatters;
@@ -20,7 +21,9 @@ public class CombineToCSV extends AbstractProcessor {
 
     private CellProcessorInterface cellProcessor;
 
-    public CombineToCSV(CellProcessorInterface cellProcessor) {
+
+    public CombineToCSV(IFileIterator fileIterator, CellProcessorInterface cellProcessor) {
+        super(fileIterator);
         this.cellProcessor = cellProcessor;
     }
 

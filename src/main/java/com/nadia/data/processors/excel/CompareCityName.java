@@ -1,9 +1,12 @@
 package com.nadia.data.processors.excel;
 
+import com.nadia.data.FileIterator;
+import com.nadia.data.api.IFileIterator;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.FileNotFoundException;
@@ -14,6 +17,11 @@ import java.util.regex.Pattern;
 public class CompareCityName extends Cellabrate {
 
     Logger logger = LoggerFactory.getLogger(CompareCityName.class);
+
+    @Autowired
+    public CompareCityName(IFileIterator fileIterator) {
+        super(new FileIterator());
+    }
 
 
     interface ITransformForCompare {
@@ -91,8 +99,8 @@ public class CompareCityName extends Cellabrate {
 
         process(inFileName, "distance",
                 (sheet, row) -> {
-                    String s1 = row.getCell(0).getStringCellValue();
-                    String s2 = row.getCell(2).getStringCellValue();
+                    String s1 = row.getCell(1).getStringCellValue();
+                    String s2 = row.getCell(3).getStringCellValue();
 
 //                    String c1 = removeHyphen.transform(removeDash.transform(s1));
 //                    String c2 = removeHyphen.transform(removeDash.transform(s2));

@@ -1,5 +1,7 @@
 package com.nadia.data.processors.excel;
 
+import com.nadia.data.FileIterator;
+import com.nadia.data.api.IFileIterator;
 import com.nadia.data.translators.Transliterator;
 import com.nadia.data.translators.TransliteratorForCombine;
 import org.springframework.context.annotation.Bean;
@@ -8,24 +10,28 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class Config {
 
+    @Bean
+    public IFileIterator fileIterator() {
+        return new FileIterator();
+    }
 
     @Bean
-    Transliterator transliterator(){
+    public Transliterator transliterator() {
         return new Transliterator();
     }
 
     @Bean
-    TransliteratorForCombine transliteratorForCombine(){
+    public TransliteratorForCombine transliteratorForCombine() {
         return new TransliteratorForCombine();
     }
 
     @Bean
-    CombineToCSV combineToCSV(){
-        return new CombineToCSV(transliteratorForCombine());
+    public CombineToCSV combineToCSV() {
+        return new CombineToCSV(fileIterator(), transliteratorForCombine());
     }
 
     @Bean
-    ProcessAllCells processAllCells(){
-        return new ProcessAllCells(transliterator());
+    public ProcessAllCells processAllCells() {
+        return new ProcessAllCells(fileIterator(), transliterator());
     }
 }

@@ -1,7 +1,8 @@
 package com.nadia.data.api;
 
-/**
- * Created by Denis on 6/9/16.
- */
+import com.nadia.data.util.Parameters;
+
 public interface IProcessor {
+
+    void doYaThing(Parameters params);
 }

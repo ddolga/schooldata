@@ -1,5 +1,6 @@
 package com.nadia.data.processors.db;
 
+import com.nadia.data.api.IFileIterator;
 import com.nadia.data.api.IUpdateRow;
 import com.nadia.data.api.SchoolDataInterface;
 import com.nadia.data.processors.AbstractProcessor;
@@ -17,7 +18,9 @@ public abstract class AbstractUpdateField extends AbstractProcessor {
 
     protected SchoolDataInterface schoolDataRepository;
 
-    public AbstractUpdateField(SchoolDataInterface schoolDataRepository) {
+
+    public AbstractUpdateField(IFileIterator fileIterator, SchoolDataInterface schoolDataRepository) {
+        super(fileIterator);
         this.schoolDataRepository = schoolDataRepository;
     }
 
@@ -33,21 +36,21 @@ public abstract class AbstractUpdateField extends AbstractProcessor {
 
     protected void _processFile(String inFileName, IUpdateRow updateRow) {
 
-            try {
-                Workbook wb = WorkbookFactory.create(new File(inFileName));
-                for (Sheet sheet : wb) {
-                    boolean isFirstRow = true;
-                    for (Row row : sheet) {
-                        if (!isFirstRow) {
-                              updateRow.update(row);
-                        }
-                        isFirstRow = false;
+        try {
+            Workbook wb = WorkbookFactory.create(new File(inFileName));
+            for (Sheet sheet : wb) {
+                boolean isFirstRow = true;
+                for (Row row : sheet) {
+                    if (!isFirstRow) {
+                        updateRow.update(row);
                     }
+                    isFirstRow = false;
                 }
-
-                wb.close();
-            } catch (IOException | InvalidFormatException e) {
-                e.printStackTrace();
             }
+
+            wb.close();
+        } catch (IOException | InvalidFormatException e) {
+            e.printStackTrace();
+        }
     }
 }

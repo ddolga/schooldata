@@ -1,5 +1,6 @@
 package com.nadia.data.processors.db;
 
+import com.nadia.data.api.IFileIterator;
 import com.nadia.data.api.SchoolDataInterface;
 import org.apache.poi.ss.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +13,8 @@ public class UpdateCityName extends AbstractUpdateField {
 
 
     @Autowired
-    public UpdateCityName( SchoolDataInterface schoolDataRepository) {
-        super(schoolDataRepository);
+    public UpdateCityName(IFileIterator fileIterator, SchoolDataInterface schoolDataRepository) {
+        super(fileIterator,schoolDataRepository);
     }
 
     @Override
