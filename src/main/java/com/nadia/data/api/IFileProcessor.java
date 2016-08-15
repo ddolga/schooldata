@@ -4,7 +4,7 @@ import com.nadia.data.util.Parameters;
 
 import java.io.FileNotFoundException;
 
-public interface IProcessFile {
+public interface IFileProcessor {
 
     void setup() throws FileNotFoundException;
 

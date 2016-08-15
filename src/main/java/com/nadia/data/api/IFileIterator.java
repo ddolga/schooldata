@@ -4,8 +4,5 @@ import java.io.FileNotFoundException;
 
 public interface IFileIterator {
 
-    void iterateOverFiles(String[] fs) throws FileNotFoundException;
-
-    void setProcessFile(IProcessFile processFile);
-
+    void iterateOverFiles(String[] fs,IFileProcessor fileProcessor) throws FileNotFoundException;
 }

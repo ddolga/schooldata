@@ -34,4 +34,14 @@ public class Config {
     public ProcessAllCells processAllCells() {
         return new ProcessAllCells(fileIterator(), transliterator());
     }
+
+    @Bean
+    public CleanAvailableLabor cleanAvailableLabor() {
+        return new CleanAvailableLabor(fileIterator());
+    }
+
+    @Bean
+    public SAXProcessor saxProcessor() {
+        return new SAXProcessor(fileIterator());
+    }
 }

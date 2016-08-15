@@ -16,17 +16,17 @@ import org.springframework.stereotype.Component;
 import java.io.*;
 
 @Component
-public class ExportToExcel extends AbstractProcessor {
+public class IFileProcessor extends AbstractProcessor {
 
 
-    private final Logger logger = LoggerFactory.getLogger(ExportToExcel.class);
+    private final Logger logger = LoggerFactory.getLogger(IFileProcessor.class);
 
 
     Workbook wb;
     FileOutputStream outStream;
 
     @Autowired
-    public ExportToExcel(IFileIterator fileIterator) {
+    public IFileProcessor(IFileIterator fileIterator) {
         super(fileIterator);
     }
 

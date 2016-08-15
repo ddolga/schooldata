@@ -12,11 +12,10 @@ import org.springframework.context.ApplicationContext;
 public class MainApp {
 
     static public void main(String[] args) {
-        ApplicationContext ctx = SpringApplication.run(MainApp.class,args);
+        ApplicationContext ctx = SpringApplication.run(MainApp.class, args);
 
         Parameters params = new Parameters(args);
-        String importerType = params.getImporterType();
-        IProcessor processor = (IProcessor) ctx.getBean(importerType);
+        IProcessor processor = (IProcessor) ctx.getBean(params.getImporterType());
         processor.doYaThing(params);
     }
 

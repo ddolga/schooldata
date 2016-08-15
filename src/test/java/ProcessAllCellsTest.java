@@ -1,6 +1,6 @@
 import com.nadia.data.FileIterator;
 import com.nadia.data.api.CellProcessorInterface;
-import com.nadia.data.api.IProcessFile;
+import com.nadia.data.api.IFileProcessor;
 import com.nadia.data.processors.excel.ProcessAllCells;
 import org.apache.poi.ss.usermodel.Cell;
 import org.junit.Before;
@@ -15,7 +15,7 @@ import static org.mockito.Mockito.verify;
 
 public class ProcessAllCellsTest {
 
-    IProcessFile transliterator;
+    IFileProcessor transliterator;
 
     @Mock
     CellProcessorInterface processor;

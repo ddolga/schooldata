@@ -13,4 +13,6 @@ public interface ParametersInterface {
     boolean hasHeader();
 
     String getImporterType();
+
+    int getSkippedRows();
 }

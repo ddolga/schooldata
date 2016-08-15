@@ -9,10 +9,8 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
 public abstract class Cellabrate extends AbstractProcessor {
@@ -27,28 +25,20 @@ public abstract class Cellabrate extends AbstractProcessor {
         String outFileName = Formatters.formatOutputFileName(inFileName, prefix);
         try {
             Workbook wb = WorkbookFactory.create(new File(inFileName));
+            int startRow = params.getSkippedRows();
             for (Sheet sheet : wb) {
-                for (Row row : sheet) {
+                sheet.createFreezePane(0, 0); //remove freeze panes
+                for (int i = startRow; i < sheet.getLastRowNum(); i++) {
+                    Row row = sheet.getRow(i);
                     rowProcessor.doRow(sheet, row);
                 }
             }
 
-            if (outFileName != null) {
-                try {
-                    FileOutputStream fileOut = new FileOutputStream(outFileName);
-                    wb.write(fileOut);
-                    fileOut.close();
-                    //this seems to cause to workbook to save back to the original version
-//                    wb.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            } else {
-                wb.close();
-            }
+            closeOut(outFileName, wb);
 
         } catch (IOException | InvalidFormatException e) {
             e.printStackTrace();
         }
     }
+
 }

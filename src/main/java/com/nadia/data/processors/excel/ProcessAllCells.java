@@ -2,7 +2,6 @@ package com.nadia.data.processors.excel;
 
 import com.nadia.data.api.CellProcessorInterface;
 import com.nadia.data.api.IFileIterator;
-import com.nadia.data.translators.Transliterator;
 import org.apache.poi.ss.usermodel.Cell;
 
 import java.io.FileNotFoundException;
@@ -11,7 +10,7 @@ public class ProcessAllCells extends Cellabrate {
 
     private CellProcessorInterface cellProcessor;
 
-    public ProcessAllCells(IFileIterator fileIterator,CellProcessorInterface cellProcessor) {
+    public ProcessAllCells(IFileIterator fileIterator, CellProcessorInterface cellProcessor) {
         super(fileIterator);
         this.cellProcessor = cellProcessor;
     }
